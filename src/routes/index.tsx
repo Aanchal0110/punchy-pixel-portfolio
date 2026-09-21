@@ -99,7 +99,7 @@ function Index() {
   const [soundOn, setSoundOn] = useState(true);
   const [copied, setCopied] = useState("");
   const [contactOpen, setContactOpen] = useState(false);
-  const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const transitionTimer = useRef<number | null>(null);
   const knockedOut = hits >= 6;
 
   useEffect(() => () => {
@@ -110,7 +110,7 @@ function Index() {
     if (knockedOut || isHit) return;
     const next = hits + 1;
     setHits(next);
-    setHitWord(next === 6 ? "K.O.!" : hitWords[(next - 1) % hitWords.length]);
+    setHitWord(next === 6 ? "K.O.!" : (hitWords[(next - 1) % hitWords.length] ?? "BAM!"));
     setIsHit(true);
     if (soundOn) playTone(next === 6 ? "win" : "hit");
     window.setTimeout(() => setIsHit(false), 260);
