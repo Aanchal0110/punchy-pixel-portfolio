@@ -405,6 +405,48 @@ function Portfolio({
         </div>
       </section>
 
+      <section id="social" className="section-block social-section">
+        <div className="section-kicker">02 / SOCIAL MEDIA</div>
+        <div className="social-head">
+          <h2>Campaign creatives<br />built for the feed.</h2>
+          <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Tap any post for the full-size view.</p>
+        </div>
+        <div className="social-grid">
+          {socialPosts.map((post, index) => (
+            <button
+              type="button"
+              key={post.title}
+              className="social-card"
+              onClick={() => openShowcase(socialShowcase, index)}
+              aria-label={`Open ${post.title} in full screen`}
+            >
+              <div className="social-media"><img src={post.src} alt={post.title} loading="lazy" /></div>
+              <div className="social-body">
+                <span>{post.kicker}</span>
+                <b>{post.title}</b>
+                <p>{post.copy}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block brands-section">
+        <div className="section-kicker">03 / CLIENTS &amp; BRANDS</div>
+        <div className="brands-head">
+          <h2>Brands I&apos;ve written for.</h2>
+          <p>Campaigns, social and long-form copy delivered for global brands, leagues and events.</p>
+        </div>
+        <div className="brand-grid">
+          {brands.map((brand) => <span className="brand-chip" key={brand}>{brand}</span>)}
+        </div>
+        <Button asChild className="arcade-button mt-8">
+          <a href="https://www.behance.net/gallery/247523423/Copywriter-Portfolio" target="_blank" rel="noreferrer">
+            View full portfolio on Behance <ArrowUpRight />
+          </a>
+        </Button>
+      </section>
+
       <section id="experience" className="section-block experience-section">
         <div className="section-heading"><div><span className="section-kicker">02 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
         <div className="experience-list">
