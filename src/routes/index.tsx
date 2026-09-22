@@ -92,34 +92,68 @@ type ShowcaseItem = {
   linkLabel?: string;
 };
 
+const brands = [
+  "Red Bull",
+  "Red Bull Mobile",
+  "Disney",
+  "ZEE5",
+  "Hyundai",
+  "Volkswagen",
+  "NBA Abu Dhabi Games 2023",
+  "Dubai Airshow",
+  "Dubai Future Forum",
+  "Dubai Fashion Week",
+  "COP28 UAE",
+  "Drishyam Films",
+  "ICC Men's World Cup 2023",
+  "Nium",
+  "Eid Al Etihad",
+];
+
+const socialPosts: { title: string; kicker: string; copy: string; src: string }[] = [
+  {
+    title: "Superstars Assembled",
+    kicker: "ECL Season 3 · Retentions",
+    copy: "Squad reveal creative announcing the retained Kolkata Super Stars line-up for the new season.",
+    src: eclSuperstarsAsset.url,
+  },
+  {
+    title: "Welcome Back, Captain",
+    kicker: "Retention announcement",
+    copy: "Pushkar Raj Thakur retained as captain — a hero-led post built for maximum fan reaction.",
+    src: eclCaptainAsset.url,
+  },
+  {
+    title: "Guess the Ball",
+    kicker: "Matchday engagement",
+    copy: "Interactive comment-bait post turning a still frame into a guessing game for the feed.",
+    src: eclBallAsset.url,
+  },
+  {
+    title: "Player Auction",
+    kicker: "15th June announcement",
+    copy: "Auction day announcement creative with date-led urgency and league branding.",
+    src: eclAuctionAsset.url,
+  },
+  {
+    title: "Stay Tuned",
+    kicker: "Retained players teaser",
+    copy: "Teaser post keeping the audience hooked ahead of the full retention reveal.",
+    src: eclStayTunedAsset.url,
+  },
+];
+
+const socialShowcase: ShowcaseItem = {
+  id: "ecl",
+  kicker: "Social campaign",
+  title: "Kolkata Super Stars — ECL Season 3",
+  copy: "Season-long social campaign creatives.",
+  cover: eclSuperstarsAsset.url,
+  tags: [],
+  images: socialPosts.map((post) => ({ src: post.src, caption: `${post.title} — ${post.kicker}` })),
+};
+
 const showcase: ShowcaseItem[] = [
-  {
-    id: "clients",
-    kicker: "Client roster",
-    title: "Clients I've worked with",
-    copy: "Red Bull, Disney, ZEE5, Hyundai, Volkswagen, NBA Abu Dhabi Games, Dubai Airshow, COP28 UAE and more — the full portfolio lives on Behance.",
-    cover: clientsAsset.url,
-    tags: ["Behance", "Brand work", "Full portfolio"],
-    feature: true,
-    images: [{ src: clientsAsset.url, caption: "Clients I've worked with" }],
-    link: "https://www.behance.net/gallery/247523423/Copywriter-Portfolio",
-    linkLabel: "Open full portfolio on Behance",
-  },
-  {
-    id: "ecl",
-    kicker: "Sports campaign",
-    title: "Entertainment Cricket League — Kolkata Super Stars",
-    copy: "Season-long social campaign: retentions, auction announcements and matchday engagement creatives.",
-    cover: eclSuperstarsAsset.url,
-    tags: ["Social", "Sports", "5 posters"],
-    images: [
-      { src: eclSuperstarsAsset.url, caption: "Superstars Assembled — ECL S3 retentions" },
-      { src: eclCaptainAsset.url, caption: "Welcome Back Captain — Pushkar Raj Thakur retained" },
-      { src: eclBallAsset.url, caption: "Guess the Ball — matchday engagement" },
-      { src: eclAuctionAsset.url, caption: "ECL Season 3 Player Auction" },
-      { src: eclStayTunedAsset.url, caption: "Stay Tuned — retained players teaser" },
-    ],
-  },
   {
     id: "jiohotstar",
     kicker: "Entertainment",
