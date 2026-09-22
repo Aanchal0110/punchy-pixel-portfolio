@@ -461,7 +461,7 @@ function Portfolio({
       </section>
 
       <section id="about" className="section-block skills-section">
-        <div className="section-kicker">03 / THE TOOLKIT</div>
+        <div className="section-kicker">05 / THE TOOLKIT</div>
         <h2>Moves in the locker.</h2>
         <div className="skill-grid">
           {skills.map((skill, index) => <div className="skill-tile" key={skill}><span>0{index + 1}</span><b>{skill}</b><Sparkles /></div>)}
