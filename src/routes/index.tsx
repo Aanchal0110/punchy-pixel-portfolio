@@ -469,7 +469,7 @@ function Portfolio({
       </section>
 
       <section className="section-block education-section">
-        <div><span className="section-kicker">04 / TRAINING CAMP</span><h2>Education</h2></div>
+        <div><span className="section-kicker">06 / TRAINING CAMP</span><h2>Education</h2></div>
         <div className="education-list">
           <div><b>BMM — Bachelor of Mass Media</b><span>B.K. Birla College</span><strong>2020 — 2023</strong></div>
           <div><b>HSC</b><span>L.D. Sonawne College</span><strong>2020</strong></div>
