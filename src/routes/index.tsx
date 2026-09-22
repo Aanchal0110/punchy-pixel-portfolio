@@ -290,6 +290,14 @@ function Portfolio({
   setContactOpen: (open: boolean) => void;
   replay: () => void;
 }) {
+  const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
+  const [slide, setSlide] = useState(0);
+  const openShowcase = (item: ShowcaseItem) => {
+    setSlide(0);
+    setOpenItem(item);
+  };
+  const slides = openItem?.images ?? [];
+
   return (
     <div className="portfolio-shell animate-fade-in">
       <nav className="site-nav">
@@ -338,6 +346,27 @@ function Portfolio({
             <span>EXPLORE CAMPAIGN<br />DECKS &amp; SCRIPTS</span>
             <ArrowUpRight />
           </a>
+        </div>
+
+        <div className="showcase-grid">
+          {showcase.map((item) => (
+            <button
+              type="button"
+              key={item.id}
+              className={`showcase-card ${item.feature ? "is-feature" : ""}`}
+              onClick={() => openShowcase(item)}
+            >
+              <div className="showcase-media">
+                <img src={item.cover} alt={item.title} loading="lazy" />
+              </div>
+              <div className="showcase-body">
+                <span>{item.kicker}</span>
+                <b>{item.title}</b>
+                <p>{item.copy}</p>
+                <div className="showcase-tags">{item.tags.map((tag) => <i key={tag}>{tag}</i>)}</div>
+              </div>
+            </button>
+          ))}
         </div>
       </section>
 
