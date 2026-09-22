@@ -338,6 +338,7 @@ function Portfolio({
         <a href="#top" className="brand-lockup"><span>AS</span><b>ADITYA SALVE</b></a>
         <div className="hidden items-center gap-6 md:flex">
           <a href="#work" className="nav-link">Work</a>
+          <a href="#social" className="nav-link">Social</a>
           <a href="#experience" className="nav-link">Experience</a>
           <a href="#about" className="nav-link">About</a>
         </div>
