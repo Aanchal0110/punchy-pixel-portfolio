@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   BriefcaseBusiness,
   Check,
+  ChevronLeft,
   ChevronRight,
   Clipboard,
   Linkedin,
@@ -19,6 +20,12 @@ import {
 } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
+import clientsAsset from "@/assets/clients-behance.png.asset.json";
+import eclAuctionAsset from "@/assets/ecl-player-auction.jpg.asset.json";
+import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
+import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
+import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
+import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -70,6 +77,78 @@ const experience = [
 
 const skills = ["Platform expertise", "Content creation", "Communication", "Creativity", "Strategic thinking"];
 const hitWords = ["BAM!", "POW!", "OUCH!", "WHAM!", "KAPOW!"];
+
+type ShowcaseItem = {
+  id: string;
+  kicker: string;
+  title: string;
+  copy: string;
+  cover: string;
+  tags: string[];
+  feature?: boolean;
+  images?: { src: string; caption: string }[];
+  entries?: { title: string; copy: string }[];
+  link?: string;
+  linkLabel?: string;
+};
+
+const showcase: ShowcaseItem[] = [
+  {
+    id: "clients",
+    kicker: "Client roster",
+    title: "Clients I've worked with",
+    copy: "Red Bull, Disney, ZEE5, Hyundai, Volkswagen, NBA Abu Dhabi Games, Dubai Airshow, COP28 UAE and more — the full portfolio lives on Behance.",
+    cover: clientsAsset.url,
+    tags: ["Behance", "Brand work", "Full portfolio"],
+    feature: true,
+    images: [{ src: clientsAsset.url, caption: "Clients I've worked with" }],
+    link: "https://www.behance.net/gallery/247523423/Copywriter-Portfolio",
+    linkLabel: "Open full portfolio on Behance",
+  },
+  {
+    id: "ecl",
+    kicker: "Sports campaign",
+    title: "Entertainment Cricket League — Kolkata Super Stars",
+    copy: "Season-long social campaign: retentions, auction announcements and matchday engagement creatives.",
+    cover: eclSuperstarsAsset.url,
+    tags: ["Social", "Sports", "5 posters"],
+    images: [
+      { src: eclSuperstarsAsset.url, caption: "Superstars Assembled — ECL S3 retentions" },
+      { src: eclCaptainAsset.url, caption: "Welcome Back Captain — Pushkar Raj Thakur retained" },
+      { src: eclBallAsset.url, caption: "Guess the Ball — matchday engagement" },
+      { src: eclAuctionAsset.url, caption: "ECL Season 3 Player Auction" },
+      { src: eclStayTunedAsset.url, caption: "Stay Tuned — retained players teaser" },
+    ],
+  },
+  {
+    id: "jiohotstar",
+    kicker: "Entertainment",
+    title: "JioHotstar campaign copy & scripts",
+    copy: "Release campaigns and promo scripts across film and series launches on JioHotstar.",
+    cover: boxerImage,
+    tags: ["Scripts", "Promos", "OTT"],
+    entries: [
+      { title: "Jurassic World: Rebirth", copy: "Launch campaign copy and multi-platform promo beats built around the franchise's return." },
+      { title: "M3GAN 2.0", copy: "Sharp, sardonic social copy in M3GAN's own voice for the sequel release." },
+      { title: "Final Destination: Bloodlines", copy: "Tension-led teaser lines and countdown posts for the release window." },
+      { title: "Alien: Earth", copy: "Atmospheric campaign writing for the series drop." },
+      { title: "Mrs Deshpande", copy: "Character-first promo copy and platform adaptations." },
+      { title: "Rebel Kid", copy: "Creator-led campaign copy tuned for a young, social-native audience." },
+    ],
+  },
+  {
+    id: "longform",
+    kicker: "Long-form",
+    title: "Articles & editorial",
+    copy: "Football Express blogs plus finance and large-cap stock explainers written for non-expert readers.",
+    cover: eclBallAsset.url,
+    tags: ["Blogs", "Finance", "Research"],
+    entries: [
+      { title: "Football Express blogs", copy: "Match reports, player features and event deep-dives turned into readable, opinionated stories." },
+      { title: "Large-cap stocks & finance", copy: "Research-heavy explainers that make market movements and company fundamentals easy to follow." },
+    ],
+  },
+];
 
 function playTone(kind: "hit" | "win") {
   if (typeof window === "undefined") return;
@@ -212,6 +291,14 @@ function Portfolio({
   setContactOpen: (open: boolean) => void;
   replay: () => void;
 }) {
+  const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
+  const [slide, setSlide] = useState(0);
+  const openShowcase = (item: ShowcaseItem) => {
+    setSlide(0);
+    setOpenItem(item);
+  };
+  const slides = openItem?.images ?? [];
+
   return (
     <div className="portfolio-shell animate-fade-in">
       <nav className="site-nav">
@@ -261,6 +348,27 @@ function Portfolio({
             <ArrowUpRight />
           </a>
         </div>
+
+        <div className="showcase-grid">
+          {showcase.map((item) => (
+            <button
+              type="button"
+              key={item.id}
+              className={`showcase-card ${item.feature ? "is-feature" : ""}`}
+              onClick={() => openShowcase(item)}
+            >
+              <div className="showcase-media">
+                <img src={item.cover} alt={item.title} loading="lazy" />
+              </div>
+              <div className="showcase-body">
+                <span>{item.kicker}</span>
+                <b>{item.title}</b>
+                <p>{item.copy}</p>
+                <div className="showcase-tags">{item.tags.map((tag) => <i key={tag}>{tag}</i>)}</div>
+              </div>
+            </button>
+          ))}
+        </div>
       </section>
 
       <section id="experience" className="section-block experience-section">
@@ -302,6 +410,52 @@ function Portfolio({
         </div>
         <div className="footer-base"><span>© 2026 ADITYA SALVE</span><Button variant="ghost" onClick={replay}><RotateCcw /> Play boxing again</Button></div>
       </footer>
+
+      {openItem && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openItem.title} onClick={() => setOpenItem(null)}>
+          <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
+            <b>{openItem.title}</b>
+            <div className="flex items-center gap-2">
+              {openItem.link && (
+                <Button asChild variant="ghost" className="lightbox-close">
+                  <a href={openItem.link} target="_blank" rel="noreferrer">{openItem.linkLabel ?? "Open"} <ArrowUpRight /></a>
+                </Button>
+              )}
+              <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenItem(null)} aria-label="Close viewer"><X /></Button>
+            </div>
+          </div>
+          <div className="lightbox-body" onClick={(event) => event.stopPropagation()}>
+            {slides.length > 0 ? (
+              <>
+                {slides.length > 1 && (
+                  <button type="button" className="lightbox-nav" aria-label="Previous image" onClick={() => setSlide((value) => (value - 1 + slides.length) % slides.length)}>
+                    <ChevronLeft />
+                  </button>
+                )}
+                <img src={slides[slide]?.src} alt={slides[slide]?.caption ?? openItem.title} />
+                {slides.length > 1 && (
+                  <button type="button" className="lightbox-nav" aria-label="Next image" onClick={() => setSlide((value) => (value + 1) % slides.length)}>
+                    <ChevronRight />
+                  </button>
+                )}
+              </>
+            ) : (
+              <div className="copy-list">
+                {openItem.entries?.map((entry) => (
+                  <article key={entry.title}><h4>{entry.title}</h4><p>{entry.copy}</p></article>
+                ))}
+              </div>
+            )}
+          </div>
+          {slides.length > 1 && (
+            <div className="lightbox-foot" onClick={(event) => event.stopPropagation()}>
+              {slides.map((item, index) => (
+                <button key={item.src} type="button" data-active={index === slide} aria-label={`Image ${index + 1}`} onClick={() => setSlide(index)} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {contactOpen && (
         <div className="contact-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-title" onClick={() => setContactOpen(false)}>
