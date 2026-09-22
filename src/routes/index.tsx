@@ -19,6 +19,12 @@ import {
 } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
+import clientsAsset from "@/assets/clients-behance.png.asset.json";
+import eclAuctionAsset from "@/assets/ecl-player-auction.jpg.asset.json";
+import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
+import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
+import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
+import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
