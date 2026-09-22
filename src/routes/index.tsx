@@ -77,6 +77,78 @@ const experience = [
 const skills = ["Platform expertise", "Content creation", "Communication", "Creativity", "Strategic thinking"];
 const hitWords = ["BAM!", "POW!", "OUCH!", "WHAM!", "KAPOW!"];
 
+type ShowcaseItem = {
+  id: string;
+  kicker: string;
+  title: string;
+  copy: string;
+  cover: string;
+  tags: string[];
+  feature?: boolean;
+  images?: { src: string; caption: string }[];
+  entries?: { title: string; copy: string }[];
+  link?: string;
+  linkLabel?: string;
+};
+
+const showcase: ShowcaseItem[] = [
+  {
+    id: "clients",
+    kicker: "Client roster",
+    title: "Clients I've worked with",
+    copy: "Red Bull, Disney, ZEE5, Hyundai, Volkswagen, NBA Abu Dhabi Games, Dubai Airshow, COP28 UAE and more — the full portfolio lives on Behance.",
+    cover: clientsAsset.url,
+    tags: ["Behance", "Brand work", "Full portfolio"],
+    feature: true,
+    images: [{ src: clientsAsset.url, caption: "Clients I've worked with" }],
+    link: "https://www.behance.net/gallery/247523423/Copywriter-Portfolio",
+    linkLabel: "Open full portfolio on Behance",
+  },
+  {
+    id: "ecl",
+    kicker: "Sports campaign",
+    title: "Entertainment Cricket League — Kolkata Super Stars",
+    copy: "Season-long social campaign: retentions, auction announcements and matchday engagement creatives.",
+    cover: eclSuperstarsAsset.url,
+    tags: ["Social", "Sports", "5 posters"],
+    images: [
+      { src: eclSuperstarsAsset.url, caption: "Superstars Assembled — ECL S3 retentions" },
+      { src: eclCaptainAsset.url, caption: "Welcome Back Captain — Pushkar Raj Thakur retained" },
+      { src: eclBallAsset.url, caption: "Guess the Ball — matchday engagement" },
+      { src: eclAuctionAsset.url, caption: "ECL Season 3 Player Auction" },
+      { src: eclStayTunedAsset.url, caption: "Stay Tuned — retained players teaser" },
+    ],
+  },
+  {
+    id: "jiohotstar",
+    kicker: "Entertainment",
+    title: "JioHotstar campaign copy & scripts",
+    copy: "Release campaigns and promo scripts across film and series launches on JioHotstar.",
+    cover: boxerImage,
+    tags: ["Scripts", "Promos", "OTT"],
+    entries: [
+      { title: "Jurassic World: Rebirth", copy: "Launch campaign copy and multi-platform promo beats built around the franchise's return." },
+      { title: "M3GAN 2.0", copy: "Sharp, sardonic social copy in M3GAN's own voice for the sequel release." },
+      { title: "Final Destination: Bloodlines", copy: "Tension-led teaser lines and countdown posts for the release window." },
+      { title: "Alien: Earth", copy: "Atmospheric campaign writing for the series drop." },
+      { title: "Mrs Deshpande", copy: "Character-first promo copy and platform adaptations." },
+      { title: "Rebel Kid", copy: "Creator-led campaign copy tuned for a young, social-native audience." },
+    ],
+  },
+  {
+    id: "longform",
+    kicker: "Long-form",
+    title: "Articles & editorial",
+    copy: "Football Express blogs plus finance and large-cap stock explainers written for non-expert readers.",
+    cover: eclBallAsset.url,
+    tags: ["Blogs", "Finance", "Research"],
+    entries: [
+      { title: "Football Express blogs", copy: "Match reports, player features and event deep-dives turned into readable, opinionated stories." },
+      { title: "Large-cap stocks & finance", copy: "Research-heavy explainers that make market movements and company fundamentals easy to follow." },
+    ],
+  },
+];
+
 function playTone(kind: "hit" | "win") {
   if (typeof window === "undefined") return;
   const AudioContextClass = window.AudioContext ??
