@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   BriefcaseBusiness,
   Check,
+  ChevronLeft,
   ChevronRight,
   Clipboard,
   Linkedin,
@@ -409,6 +410,52 @@ function Portfolio({
         </div>
         <div className="footer-base"><span>© 2026 ADITYA SALVE</span><Button variant="ghost" onClick={replay}><RotateCcw /> Play boxing again</Button></div>
       </footer>
+
+      {openItem && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openItem.title} onClick={() => setOpenItem(null)}>
+          <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
+            <b>{openItem.title}</b>
+            <div className="flex items-center gap-2">
+              {openItem.link && (
+                <Button asChild variant="ghost" className="lightbox-close">
+                  <a href={openItem.link} target="_blank" rel="noreferrer">{openItem.linkLabel ?? "Open"} <ArrowUpRight /></a>
+                </Button>
+              )}
+              <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenItem(null)} aria-label="Close viewer"><X /></Button>
+            </div>
+          </div>
+          <div className="lightbox-body" onClick={(event) => event.stopPropagation()}>
+            {slides.length > 0 ? (
+              <>
+                {slides.length > 1 && (
+                  <button type="button" className="lightbox-nav" aria-label="Previous image" onClick={() => setSlide((value) => (value - 1 + slides.length) % slides.length)}>
+                    <ChevronLeft />
+                  </button>
+                )}
+                <img src={slides[slide]?.src} alt={slides[slide]?.caption ?? openItem.title} />
+                {slides.length > 1 && (
+                  <button type="button" className="lightbox-nav" aria-label="Next image" onClick={() => setSlide((value) => (value + 1) % slides.length)}>
+                    <ChevronRight />
+                  </button>
+                )}
+              </>
+            ) : (
+              <div className="copy-list">
+                {openItem.entries?.map((entry) => (
+                  <article key={entry.title}><h4>{entry.title}</h4><p>{entry.copy}</p></article>
+                ))}
+              </div>
+            )}
+          </div>
+          {slides.length > 1 && (
+            <div className="lightbox-foot" onClick={(event) => event.stopPropagation()}>
+              {slides.map((item, index) => (
+                <button key={item.src} type="button" data-active={index === slide} aria-label={`Image ${index + 1}`} onClick={() => setSlide(index)} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {contactOpen && (
         <div className="contact-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-title" onClick={() => setContactOpen(false)}>
