@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
-import clientsAsset from "@/assets/clients-behance.png.asset.json";
 import eclAuctionAsset from "@/assets/ecl-player-auction.jpg.asset.json";
 import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
 import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
@@ -92,34 +91,68 @@ type ShowcaseItem = {
   linkLabel?: string;
 };
 
+const brands = [
+  "Red Bull",
+  "Red Bull Mobile",
+  "Disney",
+  "ZEE5",
+  "Hyundai",
+  "Volkswagen",
+  "NBA Abu Dhabi Games 2023",
+  "Dubai Airshow",
+  "Dubai Future Forum",
+  "Dubai Fashion Week",
+  "COP28 UAE",
+  "Drishyam Films",
+  "ICC Men's World Cup 2023",
+  "Nium",
+  "Eid Al Etihad",
+];
+
+const socialPosts: { title: string; kicker: string; copy: string; src: string }[] = [
+  {
+    title: "Superstars Assembled",
+    kicker: "ECL Season 3 · Retentions",
+    copy: "Squad reveal creative announcing the retained Kolkata Super Stars line-up for the new season.",
+    src: eclSuperstarsAsset.url,
+  },
+  {
+    title: "Welcome Back, Captain",
+    kicker: "Retention announcement",
+    copy: "Pushkar Raj Thakur retained as captain — a hero-led post built for maximum fan reaction.",
+    src: eclCaptainAsset.url,
+  },
+  {
+    title: "Guess the Ball",
+    kicker: "Matchday engagement",
+    copy: "Interactive comment-bait post turning a still frame into a guessing game for the feed.",
+    src: eclBallAsset.url,
+  },
+  {
+    title: "Player Auction",
+    kicker: "15th June announcement",
+    copy: "Auction day announcement creative with date-led urgency and league branding.",
+    src: eclAuctionAsset.url,
+  },
+  {
+    title: "Stay Tuned",
+    kicker: "Retained players teaser",
+    copy: "Teaser post keeping the audience hooked ahead of the full retention reveal.",
+    src: eclStayTunedAsset.url,
+  },
+];
+
+const socialShowcase: ShowcaseItem = {
+  id: "ecl",
+  kicker: "Social campaign",
+  title: "Kolkata Super Stars — ECL Season 3",
+  copy: "Season-long social campaign creatives.",
+  cover: eclSuperstarsAsset.url,
+  tags: [],
+  images: socialPosts.map((post) => ({ src: post.src, caption: `${post.title} — ${post.kicker}` })),
+};
+
 const showcase: ShowcaseItem[] = [
-  {
-    id: "clients",
-    kicker: "Client roster",
-    title: "Clients I've worked with",
-    copy: "Red Bull, Disney, ZEE5, Hyundai, Volkswagen, NBA Abu Dhabi Games, Dubai Airshow, COP28 UAE and more — the full portfolio lives on Behance.",
-    cover: clientsAsset.url,
-    tags: ["Behance", "Brand work", "Full portfolio"],
-    feature: true,
-    images: [{ src: clientsAsset.url, caption: "Clients I've worked with" }],
-    link: "https://www.behance.net/gallery/247523423/Copywriter-Portfolio",
-    linkLabel: "Open full portfolio on Behance",
-  },
-  {
-    id: "ecl",
-    kicker: "Sports campaign",
-    title: "Entertainment Cricket League — Kolkata Super Stars",
-    copy: "Season-long social campaign: retentions, auction announcements and matchday engagement creatives.",
-    cover: eclSuperstarsAsset.url,
-    tags: ["Social", "Sports", "5 posters"],
-    images: [
-      { src: eclSuperstarsAsset.url, caption: "Superstars Assembled — ECL S3 retentions" },
-      { src: eclCaptainAsset.url, caption: "Welcome Back Captain — Pushkar Raj Thakur retained" },
-      { src: eclBallAsset.url, caption: "Guess the Ball — matchday engagement" },
-      { src: eclAuctionAsset.url, caption: "ECL Season 3 Player Auction" },
-      { src: eclStayTunedAsset.url, caption: "Stay Tuned — retained players teaser" },
-    ],
-  },
   {
     id: "jiohotstar",
     kicker: "Entertainment",
@@ -293,8 +326,8 @@ function Portfolio({
 }) {
   const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
   const [slide, setSlide] = useState(0);
-  const openShowcase = (item: ShowcaseItem) => {
-    setSlide(0);
+  const openShowcase = (item: ShowcaseItem, index = 0) => {
+    setSlide(index);
     setOpenItem(item);
   };
   const slides = openItem?.images ?? [];
@@ -305,6 +338,7 @@ function Portfolio({
         <a href="#top" className="brand-lockup"><span>AS</span><b>ADITYA SALVE</b></a>
         <div className="hidden items-center gap-6 md:flex">
           <a href="#work" className="nav-link">Work</a>
+          <a href="#social" className="nav-link">Social</a>
           <a href="#experience" className="nav-link">Experience</a>
           <a href="#about" className="nav-link">About</a>
         </div>
@@ -371,8 +405,50 @@ function Portfolio({
         </div>
       </section>
 
+      <section id="social" className="section-block social-section">
+        <div className="section-kicker">02 / SOCIAL MEDIA</div>
+        <div className="social-head">
+          <h2>Campaign creatives<br />built for the feed.</h2>
+          <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Tap any post for the full-size view.</p>
+        </div>
+        <div className="social-grid">
+          {socialPosts.map((post, index) => (
+            <button
+              type="button"
+              key={post.title}
+              className="social-card"
+              onClick={() => openShowcase(socialShowcase, index)}
+              aria-label={`Open ${post.title} in full screen`}
+            >
+              <div className="social-media"><img src={post.src} alt={post.title} loading="lazy" /></div>
+              <div className="social-body">
+                <span>{post.kicker}</span>
+                <b>{post.title}</b>
+                <p>{post.copy}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block brands-section">
+        <div className="section-kicker">03 / CLIENTS &amp; BRANDS</div>
+        <div className="brands-head">
+          <h2>Brands I&apos;ve written for.</h2>
+          <p>Campaigns, social and long-form copy delivered for global brands, leagues and events.</p>
+        </div>
+        <div className="brand-grid">
+          {brands.map((brand) => <span className="brand-chip" key={brand}>{brand}</span>)}
+        </div>
+        <Button asChild className="arcade-button mt-8">
+          <a href="https://www.behance.net/gallery/247523423/Copywriter-Portfolio" target="_blank" rel="noreferrer">
+            View full portfolio on Behance <ArrowUpRight />
+          </a>
+        </Button>
+      </section>
+
       <section id="experience" className="section-block experience-section">
-        <div className="section-heading"><div><span className="section-kicker">02 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
+        <div className="section-heading"><div><span className="section-kicker">04 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
         <div className="experience-list">
           {experience.map((item, index) => (
             <article className="experience-row" key={item.company}>
@@ -385,7 +461,7 @@ function Portfolio({
       </section>
 
       <section id="about" className="section-block skills-section">
-        <div className="section-kicker">03 / THE TOOLKIT</div>
+        <div className="section-kicker">05 / THE TOOLKIT</div>
         <h2>Moves in the locker.</h2>
         <div className="skill-grid">
           {skills.map((skill, index) => <div className="skill-tile" key={skill}><span>0{index + 1}</span><b>{skill}</b><Sparkles /></div>)}
@@ -393,7 +469,7 @@ function Portfolio({
       </section>
 
       <section className="section-block education-section">
-        <div><span className="section-kicker">04 / TRAINING CAMP</span><h2>Education</h2></div>
+        <div><span className="section-kicker">06 / TRAINING CAMP</span><h2>Education</h2></div>
         <div className="education-list">
           <div><b>BMM — Bachelor of Mass Media</b><span>B.K. Birla College</span><strong>2020 — 2023</strong></div>
           <div><b>HSC</b><span>L.D. Sonawne College</span><strong>2020</strong></div>
