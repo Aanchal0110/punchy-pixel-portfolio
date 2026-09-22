@@ -326,8 +326,8 @@ function Portfolio({
 }) {
   const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
   const [slide, setSlide] = useState(0);
-  const openShowcase = (item: ShowcaseItem) => {
-    setSlide(0);
+  const openShowcase = (item: ShowcaseItem, index = 0) => {
+    setSlide(index);
     setOpenItem(item);
   };
   const slides = openItem?.images ?? [];
