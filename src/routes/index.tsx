@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
-import clientsAsset from "@/assets/clients-behance.png.asset.json";
 import eclAuctionAsset from "@/assets/ecl-player-auction.jpg.asset.json";
 import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
 import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
