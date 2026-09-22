@@ -448,7 +448,7 @@ function Portfolio({
       </section>
 
       <section id="experience" className="section-block experience-section">
-        <div className="section-heading"><div><span className="section-kicker">02 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
+        <div className="section-heading"><div><span className="section-kicker">04 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
         <div className="experience-list">
           {experience.map((item, index) => (
             <article className="experience-row" key={item.company}>
