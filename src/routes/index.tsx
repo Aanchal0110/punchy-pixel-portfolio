@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
+import clientsBanner from "@/assets/clients-banner.png";
 import eclAuctionAsset from "@/assets/ecl-player-auction.jpg.asset.json";
 import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
 import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
@@ -92,21 +93,14 @@ type ShowcaseItem = {
 };
 
 const brands = [
-  "Red Bull",
-  "Red Bull Mobile",
-  "Disney",
-  "ZEE5",
-  "Hyundai",
-  "Volkswagen",
-  "NBA Abu Dhabi Games 2023",
-  "Dubai Airshow",
-  "Dubai Future Forum",
-  "Dubai Fashion Week",
-  "COP28 UAE",
-  "Drishyam Films",
-  "ICC Men's World Cup 2023",
-  "Nium",
-  "Eid Al Etihad",
+  "L&T Vyoma",
+  "Ebco",
+  "NatGeo",
+  "TransUnion CIBIL",
+  "Skybags",
+  "JioHotstar",
+  "Kolkata Super Stars",
+  "Six Sports",
 ];
 
 const socialPosts: { title: string; kicker: string; copy: string; src: string }[] = [
