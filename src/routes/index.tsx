@@ -576,6 +576,28 @@ function Portfolio({
         </div>
       )}
 
+      {openScript && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openScript.title} onClick={() => setOpenScript(null)}>
+          <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
+            <b>{openScript.brand} — {openScript.title}</b>
+            <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenScript(null)} aria-label="Close script"><X /></Button>
+          </div>
+          <div className="lightbox-body" onClick={(event) => event.stopPropagation()}>
+            <article className="script-reader">
+              <span>{openScript.format}</span>
+              <h3>{openScript.title}</h3>
+              <p className="script-logline">{openScript.logline}</p>
+              {openScript.blocks.map((block, index) => (
+                <section key={block.label ?? index}>
+                  {block.label && <h4>{block.label}</h4>}
+                  {block.lines.map((line) => <p key={line}>{line}</p>)}
+                </section>
+              ))}
+            </article>
+          </div>
+        </div>
+      )}
+
       {contactOpen && (
         <div className="contact-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-title" onClick={() => setContactOpen(false)}>
           <aside className="contact-drawer" onClick={(event) => event.stopPropagation()}>
