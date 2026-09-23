@@ -332,10 +332,19 @@ function Portfolio({
   replay: () => void;
 }) {
   const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
+  const [openScript, setOpenScript] = useState<ScriptItem | null>(null);
   const [slide, setSlide] = useState(0);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
   const openShowcase = (item: ShowcaseItem, index = 0) => {
     setSlide(index);
     setOpenItem(item);
+  };
+  const slideSocial = (direction: 1 | -1) => {
+    const track = sliderRef.current;
+    if (!track) return;
+    const card = track.querySelector<HTMLElement>(".social-card");
+    const step = card ? card.offsetWidth + 20 : track.clientWidth * 0.8;
+    track.scrollBy({ left: step * direction, behavior: "smooth" });
   };
   const slides = openItem?.images ?? [];
 
