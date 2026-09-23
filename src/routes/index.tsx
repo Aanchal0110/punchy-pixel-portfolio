@@ -424,10 +424,16 @@ function Portfolio({
       <section id="social" className="section-block social-section">
         <div className="section-kicker">02 / SOCIAL MEDIA</div>
         <div className="social-head">
-          <h2>Campaign creatives<br />built for the feed.</h2>
-          <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Tap any post for the full-size view.</p>
+          <div>
+            <h2>Campaign creatives<br />built for the feed.</h2>
+            <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Slide through and tap any post for the full-size view.</p>
+          </div>
+          <div className="slider-controls">
+            <button type="button" onClick={() => slideSocial(-1)} aria-label="Previous posts"><ChevronLeft /></button>
+            <button type="button" onClick={() => slideSocial(1)} aria-label="More posts"><ChevronRight /></button>
+          </div>
         </div>
-        <div className="social-grid">
+        <div className="social-slider" ref={sliderRef}>
           {socialPosts.map((post, index) => (
             <button
               type="button"
