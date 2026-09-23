@@ -148,6 +148,18 @@ const socialShowcase: ShowcaseItem = {
 
 const showcase: ShowcaseItem[] = [
   {
+    id: "clients",
+    kicker: "Client roster",
+    title: "Clients I've worked with",
+    copy: "L&T Vyoma, Ebco, NatGeo, TransUnion CIBIL, Skybags, JioHotstar, Kolkata Super Stars and Six Sports.",
+    cover: clientsBanner,
+    tags: ["Brands", "Campaigns"],
+    feature: true,
+    images: [{ src: clientsBanner, caption: "Clients I've worked with" }],
+    link: "https://www.behance.net/gallery/247523423/Copywriter-Portfolio",
+    linkLabel: "Open on Behance",
+  },
+  {
     id: "jiohotstar",
     kicker: "Entertainment",
     title: "JioHotstar campaign copy & scripts",
