@@ -453,8 +453,28 @@ function Portfolio({
         </div>
       </section>
 
+      <section id="scripts" className="section-block scripts-section">
+        <div className="section-kicker">03 / SCRIPTS</div>
+        <div className="social-head">
+          <div>
+            <h2>Scripts, start<br />to final frame.</h2>
+            <p>Brand films, public-service stories and performance scripts. Open any one to read it in full.</p>
+          </div>
+        </div>
+        <div className="scripts-grid">
+          {scripts.map((item) => (
+            <button type="button" key={item.id} className="script-card" onClick={() => setOpenScript(item)}>
+              <span>{item.brand}</span>
+              <b>{item.title}</b>
+              <p>{item.logline}</p>
+              <i>{item.format}</i>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <section className="section-block brands-section">
-        <div className="section-kicker">03 / CLIENTS &amp; BRANDS</div>
+        <div className="section-kicker">04 / CLIENTS &amp; BRANDS</div>
         <div className="brands-head">
           <h2>Brands I&apos;ve written for.</h2>
           <p>Campaigns, social and long-form copy delivered for global brands, leagues and events.</p>
