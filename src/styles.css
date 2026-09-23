@@ -460,9 +460,9 @@
 @media (max-width: 900px) {
   .showcase-grid { grid-template-columns: 1fr 1fr; }
   .showcase-card.is-feature { grid-column: 1/-1; }
-  .social-grid { grid-template-columns: 1fr 1fr; }
+  .scripts-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 620px) {
-  .showcase-grid, .social-grid { grid-template-columns: 1fr; }
+  .showcase-grid, .scripts-grid { grid-template-columns: 1fr; }
   .portfolio-shell .hero-grid { grid-template-columns: 1fr; }
 }
