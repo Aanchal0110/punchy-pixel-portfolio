@@ -27,6 +27,7 @@ import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
 import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
 import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
 import { Button } from "@/components/ui/button";
+import { scripts, type ScriptItem } from "@/data/scripts";
 
 export const Route = createFileRoute("/")({
   head: () => ({
