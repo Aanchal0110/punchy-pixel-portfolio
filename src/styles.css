@@ -395,7 +395,20 @@
 
 /* Social media showcase */
 .portfolio-shell .social-section { background: var(--pf-bg-alt); }
-.social-head { display: grid; gap: 14px; max-width: 760px; margin-top: 18px; }
+.social-head { display: flex; gap: 24px; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; margin-top: 18px; }
+.social-head > div { display: grid; gap: 14px; max-width: 760px; }
+.slider-controls { display: flex; gap: 10px; }
+.slider-controls button {
+  width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--pf-line); background: #fff;
+  display: grid; place-items: center; color: var(--pf-text); transition: border-color .2s ease, transform .2s ease;
+}
+.slider-controls button:hover { border-color: var(--pf-text); transform: translateY(-2px); }
+.slider-controls svg { width: 18px; height: 18px; }
+.social-slider {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 320px); gap: 20px; margin-top: 40px;
+  overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: thin;
+}
+.social-slider .social-card { scroll-snap-align: start; }
 .portfolio-shell .social-head h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; letter-spacing: -.02em; line-height: 1.08; }
 .social-head p { color: var(--pf-muted); font-size: 1rem; line-height: 1.6; }
 .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
