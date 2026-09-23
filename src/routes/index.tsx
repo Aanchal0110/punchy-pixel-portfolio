@@ -27,6 +27,7 @@ import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
 import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
 import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
 import { Button } from "@/components/ui/button";
+import { scripts, type ScriptItem } from "@/data/scripts";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -331,10 +332,19 @@ function Portfolio({
   replay: () => void;
 }) {
   const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
+  const [openScript, setOpenScript] = useState<ScriptItem | null>(null);
   const [slide, setSlide] = useState(0);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
   const openShowcase = (item: ShowcaseItem, index = 0) => {
     setSlide(index);
     setOpenItem(item);
+  };
+  const slideSocial = (direction: 1 | -1) => {
+    const track = sliderRef.current;
+    if (!track) return;
+    const card = track.querySelector<HTMLElement>(".social-card");
+    const step = card ? card.offsetWidth + 20 : track.clientWidth * 0.8;
+    track.scrollBy({ left: step * direction, behavior: "smooth" });
   };
   const slides = openItem?.images ?? [];
 
@@ -345,6 +355,7 @@ function Portfolio({
         <div className="hidden items-center gap-6 md:flex">
           <a href="#work" className="nav-link">Work</a>
           <a href="#social" className="nav-link">Social</a>
+          <a href="#scripts" className="nav-link">Scripts</a>
           <a href="#experience" className="nav-link">Experience</a>
           <a href="#about" className="nav-link">About</a>
         </div>
@@ -414,10 +425,16 @@ function Portfolio({
       <section id="social" className="section-block social-section">
         <div className="section-kicker">02 / SOCIAL MEDIA</div>
         <div className="social-head">
-          <h2>Campaign creatives<br />built for the feed.</h2>
-          <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Tap any post for the full-size view.</p>
+          <div>
+            <h2>Campaign creatives<br />built for the feed.</h2>
+            <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Slide through and tap any post for the full-size view.</p>
+          </div>
+          <div className="slider-controls">
+            <button type="button" onClick={() => slideSocial(-1)} aria-label="Previous posts"><ChevronLeft /></button>
+            <button type="button" onClick={() => slideSocial(1)} aria-label="More posts"><ChevronRight /></button>
+          </div>
         </div>
-        <div className="social-grid">
+        <div className="social-slider" ref={sliderRef}>
           {socialPosts.map((post, index) => (
             <button
               type="button"
@@ -437,8 +454,28 @@ function Portfolio({
         </div>
       </section>
 
+      <section id="scripts" className="section-block scripts-section">
+        <div className="section-kicker">03 / SCRIPTS</div>
+        <div className="social-head">
+          <div>
+            <h2>Scripts, start<br />to final frame.</h2>
+            <p>Brand films, public-service stories and performance scripts. Open any one to read it in full.</p>
+          </div>
+        </div>
+        <div className="scripts-grid">
+          {scripts.map((item) => (
+            <button type="button" key={item.id} className="script-card" onClick={() => setOpenScript(item)}>
+              <span>{item.brand}</span>
+              <b>{item.title}</b>
+              <p>{item.logline}</p>
+              <i>{item.format}</i>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <section className="section-block brands-section">
-        <div className="section-kicker">03 / CLIENTS &amp; BRANDS</div>
+        <div className="section-kicker">04 / CLIENTS &amp; BRANDS</div>
         <div className="brands-head">
           <h2>Brands I&apos;ve written for.</h2>
           <p>Campaigns, social and long-form copy delivered for global brands, leagues and events.</p>
@@ -454,7 +491,7 @@ function Portfolio({
       </section>
 
       <section id="experience" className="section-block experience-section">
-        <div className="section-heading"><div><span className="section-kicker">04 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
+        <div className="section-heading"><div><span className="section-kicker">05 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
         <div className="experience-list">
           {experience.map((item, index) => (
             <article className="experience-row" key={item.company}>
@@ -467,7 +504,7 @@ function Portfolio({
       </section>
 
       <section id="about" className="section-block skills-section">
-        <div className="section-kicker">05 / THE TOOLKIT</div>
+        <div className="section-kicker">06 / THE TOOLKIT</div>
         <h2>Moves in the locker.</h2>
         <div className="skill-grid">
           {skills.map((skill, index) => <div className="skill-tile" key={skill}><span>0{index + 1}</span><b>{skill}</b><Sparkles /></div>)}
@@ -475,7 +512,7 @@ function Portfolio({
       </section>
 
       <section className="section-block education-section">
-        <div><span className="section-kicker">06 / TRAINING CAMP</span><h2>Education</h2></div>
+        <div><span className="section-kicker">07 / TRAINING CAMP</span><h2>Education</h2></div>
         <div className="education-list">
           <div><b>BMM — Bachelor of Mass Media</b><span>B.K. Birla College</span><strong>2020 — 2023</strong></div>
           <div><b>HSC</b><span>L.D. Sonawne College</span><strong>2020</strong></div>
@@ -536,6 +573,28 @@ function Portfolio({
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {openScript && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openScript.title} onClick={() => setOpenScript(null)}>
+          <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
+            <b>{openScript.brand} — {openScript.title}</b>
+            <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenScript(null)} aria-label="Close script"><X /></Button>
+          </div>
+          <div className="lightbox-body" onClick={(event) => event.stopPropagation()}>
+            <article className="script-reader">
+              <span>{openScript.format}</span>
+              <h3>{openScript.title}</h3>
+              <p className="script-logline">{openScript.logline}</p>
+              {openScript.blocks.map((block, index) => (
+                <section key={block.label ?? index}>
+                  {block.label && <h4>{block.label}</h4>}
+                  {block.lines.map((line) => <p key={line}>{line}</p>)}
+                </section>
+              ))}
+            </article>
+          </div>
         </div>
       )}
 
