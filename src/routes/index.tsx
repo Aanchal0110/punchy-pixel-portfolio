@@ -399,7 +399,7 @@ function Portfolio({
   return (
     <div className="portfolio-shell animate-fade-in">
       <nav className="site-nav">
-        <a href="#top" className="brand-lockup"><span>AS</span><b>A. SALVE</b></a>
+        <a href="#top" className="brand-lockup"><span>AS</span><b>ADITYA SALVE</b></a>
         <div className="hidden items-center gap-6 md:flex">
           <a href="#work" className="nav-link">Work</a>
           <a href="#social" className="nav-link">Social</a>
@@ -414,7 +414,7 @@ function Portfolio({
       <section id="top" className="hero-grid">
         <div className="hero-copy">
           <div className="eyebrow"><Sparkles /> AVAILABLE FOR THE NEXT BIG IDEA</div>
-          <h1>A.<br /><span>SALVE.</span></h1>
+          <h1 className="hero-name-small">ADITYA <span>SALVE.</span></h1>
           <p className="hero-role">COPYWRITER</p>
           <p className="hero-blurb">Heavyweight copy that packs a punch—and knows exactly when to pull one.</p>
           <div className="flex flex-wrap gap-3">

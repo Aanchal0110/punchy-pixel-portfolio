@@ -474,3 +474,4 @@
 .about-copy ul { display:grid; gap:4px; padding-left:1.2rem; list-style:disc; }
 .portfolio-shell .insta-link { display:inline-block; margin-top:12px; padding:8px 14px; border:2px solid var(--ink); border-radius:999px; background:var(--punch); color:var(--paper); font-style:normal; font-weight:700; }
 .portfolio-shell .insta-url { display:block; margin-top:8px; font-size:.75rem; opacity:.7; word-break:break-all; }
+.portfolio-shell .hero-copy h1.hero-name-small { font-size: clamp(2.2rem, 5vw, 3.6rem) !important; line-height: 1.05 !important; }
