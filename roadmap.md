@@ -1,9 +1,9 @@
 # Roadmap
-- [ ] More social media posts + reels (new uploads) with copy
-- [ ] Social slider auto-moves
-- [ ] Portfolio back to original arcade colours
-- [ ] Short name "AS", remove "★ IDEA PUNCHER"
-- [ ] About me section
-- [ ] JioHotstar work with Instagram reel links
-- [ ] Remove education
-- [ ] Scripts placed under Campaign Decks & Scripts
+- [x] More social media posts + reels (new uploads) with copy
+- [x] Social slider auto-moves
+- [x] Portfolio back to original arcade colours
+- [x] Short name "AS", remove "★ IDEA PUNCHER"
+- [x] About me section
+- [x] JioHotstar work with Instagram reel links
+- [x] Remove education
+- [x] Scripts placed under Campaign Decks & Scripts
