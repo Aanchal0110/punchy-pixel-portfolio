@@ -26,6 +26,16 @@ import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
 import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
 import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
 import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
+import eclMissingAsset from "@/assets/ecl-missing-us.jpg.asset.json";
+import oyoAsset from "@/assets/oyo.png.asset.json";
+import colgateAsset from "@/assets/colgate.jpg.asset.json";
+import boatAsset from "@/assets/boat.png.asset.json";
+import darkFantasyAsset from "@/assets/dark-fantasy.jpg.asset.json";
+import logisticsAsset from "@/assets/logistics.jpg.asset.json";
+import yoloAsset from "@/assets/yolo.jpg.asset.json";
+import reel1Asset from "@/assets/reel-1.mp4.asset.json";
+import reel2Asset from "@/assets/reel-2.mp4.asset.json";
+import reel3Asset from "@/assets/reel-3.mp4.asset.json";
 import { Button } from "@/components/ui/button";
 import { scripts, type ScriptItem } from "@/data/scripts";
 
@@ -135,7 +145,34 @@ const socialPosts: { title: string; kicker: string; copy: string; src: string }[
     copy: "Teaser post keeping the audience hooked ahead of the full retention reveal.",
     src: eclStayTunedAsset.url,
   },
+  { title: "Missing Us?", kicker: "ECL · Off-season teaser", copy: "“The lethal duo will be back.” A comeback tease that keeps fans talking between seasons.", src: eclMissingAsset.url },
+  { title: "Campaign Reel 01", kicker: "Video · Reel", copy: "Short-form reel written for thumb-stopping first seconds and a clean payoff.", src: reel1Asset.url },
+  { title: "Hum Dila Denge", kicker: "OYO · Topical", copy: "“Tamilnadu me Kamra? Hum dila denge.” A topical one-liner riding the news cycle.", src: oyoAsset.url },
+  { title: "White Privilege at $5.47", kicker: "Colgate · Spec ad", copy: "A cheeky double-meaning headline for a whitening toothpaste.", src: colgateAsset.url },
+  { title: "Campaign Reel 02", kicker: "Video · Reel", copy: "Story-led reel built for the feed — hook, turn, brand.", src: reel2Asset.url },
+  { title: "Kashmir to Kanyakumari", kicker: "boAt · Product ad", copy: "72 hours of playback, sold as a road trip across India — in one charge.", src: boatAsset.url },
+  { title: "Some Are Sweet Too", kicker: "Sunfeast Dark Fantasy · Spec ad", copy: "“Not all dark fantasies are twisted.” Playing with the brand name for a wink.", src: darkFantasyAsset.url },
+  { title: "Others Try, We Deliver", kicker: "Logistics · Social", copy: "A confident, competitor-baiting line for an air-cargo brand.", src: logisticsAsset.url },
+  { title: "Dragon Served Chilled", kicker: "YOLO Lounge · Menu post", copy: "A dragon-fruit cooler introduced with a line that sounds like a legend.", src: yoloAsset.url },
+  { title: "Campaign Reel 03", kicker: "Video · Reel", copy: "Fast-cut reel copy paced for sound-on and sound-off viewing.", src: reel3Asset.url },
 ];
+
+const isVideo = (src?: string) => !!src && src.endsWith(".mp4");
+
+const hotstarWork = [
+  { title: "Rebel Kid", kicker: "Promo script", url: "https://www.instagram.com/reel/DQGpKSPCpRX/" },
+  { title: "Mrs Deshpande", kicker: "Marketing ideas for the upcoming series", url: "https://www.instagram.com/reel/DRPBaj4DEj9/" },
+  { title: "JioHotstar Reel", kicker: "Campaign work", url: "https://www.instagram.com/reel/DPq7RoVExeq/" },
+];
+
+const aboutLines = [
+  "I laugh in serious situations.",
+  "I watch television a lot; my electricity bill speaks for itself.",
+  "I like to watch documentaries about the Caribbean and Latin America.",
+  "I would love to live that life on the coast, but with money.",
+  "I’m an introvert (for the first few days).",
+];
+const prefers = [["Ronaldo", "Messi"], ["Djokovic", "Federer"], ["Twitter", "Instagram"], ["Generational wealth", "anything"]];
 
 const socialShowcase: ShowcaseItem = {
   id: "ecl",
@@ -346,18 +383,30 @@ function Portfolio({
     const step = card ? card.offsetWidth + 20 : track.clientWidth * 0.8;
     track.scrollBy({ left: step * direction, behavior: "smooth" });
   };
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      const track = sliderRef.current;
+      if (!track) return;
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 8) track.scrollTo({ left: 0, behavior: "smooth" });
+      else slideSocial(1);
+    }, 3000);
+    return () => window.clearInterval(id);
+  }, [paused]);
   const slides = openItem?.images ?? [];
 
   return (
     <div className="portfolio-shell animate-fade-in">
       <nav className="site-nav">
-        <a href="#top" className="brand-lockup"><span>AS</span><b>ADITYA SALVE</b></a>
+        <a href="#top" className="brand-lockup"><span>AS</span><b>A. SALVE</b></a>
         <div className="hidden items-center gap-6 md:flex">
           <a href="#work" className="nav-link">Work</a>
           <a href="#social" className="nav-link">Social</a>
+          <a href="#jiohotstar" className="nav-link">JioHotstar</a>
           <a href="#scripts" className="nav-link">Scripts</a>
           <a href="#experience" className="nav-link">Experience</a>
-          <a href="#about" className="nav-link">About</a>
+          <a href="#about-me" className="nav-link">About</a>
         </div>
         <Button className="arcade-button h-10" onClick={() => setContactOpen(true)}><Mail /> Let&apos;s talk</Button>
       </nav>
@@ -365,8 +414,8 @@ function Portfolio({
       <section id="top" className="hero-grid">
         <div className="hero-copy">
           <div className="eyebrow"><Sparkles /> AVAILABLE FOR THE NEXT BIG IDEA</div>
-          <h1>ADITYA<br /><span>SALVE.</span></h1>
-          <p className="hero-role">COPYWRITER <span>★</span> IDEA PUNCHER</p>
+          <h1>A.<br /><span>SALVE.</span></h1>
+          <p className="hero-role">COPYWRITER</p>
           <p className="hero-blurb">Heavyweight copy that packs a punch—and knows exactly when to pull one.</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="arcade-button"><a href="#work">View work <ArrowDownRight /></a></Button>
@@ -422,40 +471,8 @@ function Portfolio({
         </div>
       </section>
 
-      <section id="social" className="section-block social-section">
-        <div className="section-kicker">02 / SOCIAL MEDIA</div>
-        <div className="social-head">
-          <div>
-            <h2>Campaign creatives<br />built for the feed.</h2>
-            <p>Kolkata Super Stars · Entertainment Cricket League Season 3 — retentions, auction announcements and matchday engagement. Slide through and tap any post for the full-size view.</p>
-          </div>
-          <div className="slider-controls">
-            <button type="button" onClick={() => slideSocial(-1)} aria-label="Previous posts"><ChevronLeft /></button>
-            <button type="button" onClick={() => slideSocial(1)} aria-label="More posts"><ChevronRight /></button>
-          </div>
-        </div>
-        <div className="social-slider" ref={sliderRef}>
-          {socialPosts.map((post, index) => (
-            <button
-              type="button"
-              key={post.title}
-              className="social-card"
-              onClick={() => openShowcase(socialShowcase, index)}
-              aria-label={`Open ${post.title} in full screen`}
-            >
-              <div className="social-media"><img src={post.src} alt={post.title} loading="lazy" /></div>
-              <div className="social-body">
-                <span>{post.kicker}</span>
-                <b>{post.title}</b>
-                <p>{post.copy}</p>
-              </div>
-            </button>
-          ))}
-        </div>
-      </section>
-
       <section id="scripts" className="section-block scripts-section">
-        <div className="section-kicker">03 / SCRIPTS</div>
+        <div className="section-kicker">01 / CAMPAIGN DECKS &amp; SCRIPTS</div>
         <div className="social-head">
           <div>
             <h2>Scripts, start<br />to final frame.</h2>
@@ -470,6 +487,52 @@ function Portfolio({
               <p>{item.logline}</p>
               <i>{item.format}</i>
             </button>
+          ))}
+        </div>
+      </section>
+
+      <section id="social" className="section-block social-section">
+        <div className="section-kicker">02 / SOCIAL MEDIA</div>
+        <div className="social-head">
+          <div>
+            <h2>Campaign creatives<br />built for the feed.</h2>
+            <p>Posts, reels and topical ads for Kolkata Super Stars (ECL), OYO, boAt, Colgate, Dark Fantasy and more. Slide through and tap any post for the full-size view.</p>
+          </div>
+          <div className="slider-controls">
+            <button type="button" onClick={() => slideSocial(-1)} aria-label="Previous posts"><ChevronLeft /></button>
+            <button type="button" onClick={() => slideSocial(1)} aria-label="More posts"><ChevronRight /></button>
+          </div>
+        </div>
+        <div className="social-slider" ref={sliderRef} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={() => setPaused(true)}>
+          {socialPosts.map((post, index) => (
+            <button
+              type="button"
+              key={post.title}
+              className="social-card"
+              onClick={() => openShowcase(socialShowcase, index)}
+              aria-label={`Open ${post.title} in full screen`}
+            >
+              <div className="social-media">{isVideo(post.src) ? <video src={post.src} muted loop playsInline autoPlay preload="metadata" /> : <img src={post.src} alt={post.title} loading="lazy" />}</div>
+              <div className="social-body">
+                <span>{post.kicker}</span>
+                <b>{post.title}</b>
+                <p>{post.copy}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section id="jiohotstar" className="section-block social-section">
+        <div className="section-kicker">03 / JIOHOTSTAR</div>
+        <div className="social-head"><div><h2>Work done for<br />JioHotstar.</h2><p>Promo scripts and marketing ideas that went live as reels.</p></div></div>
+        <div className="scripts-grid">
+          {hotstarWork.map((item, index) => (
+            <a key={item.url} className="script-card" href={item.url} target="_blank" rel="noreferrer">
+              <span>0{index + 1} · {item.kicker}</span>
+              <b>{item.title}</b>
+              <i>Watch on Instagram ↗</i>
+            </a>
           ))}
         </div>
       </section>
@@ -511,12 +574,14 @@ function Portfolio({
         </div>
       </section>
 
-      <section className="section-block education-section">
-        <div><span className="section-kicker">07 / TRAINING CAMP</span><h2>Education</h2></div>
-        <div className="education-list">
-          <div><b>BMM — Bachelor of Mass Media</b><span>B.K. Birla College</span><strong>2020 — 2023</strong></div>
-          <div><b>HSC</b><span>L.D. Sonawne College</span><strong>2020</strong></div>
-          <div><b>SSC</b><span>Don Bosco School</span><strong>2018</strong></div>
+      <section id="about-me" className="section-block skills-section">
+        <div className="section-kicker">07 / ABOUT ME</div>
+        <h2>About me.</h2>
+        <div className="about-copy">
+          {aboutLines.map((line) => <p key={line}>{line}</p>)}
+          <p><b>I prefer</b></p>
+          <ul>{prefers.map(([a, b]) => <li key={a}><b>{a}</b> over {b}</li>)}</ul>
+          <p>At this moment, there’s a 97% chance I’ll be reading something or watching something.</p>
         </div>
       </section>
 
@@ -551,7 +616,7 @@ function Portfolio({
                     <ChevronLeft />
                   </button>
                 )}
-                <img src={slides[slide]?.src} alt={slides[slide]?.caption ?? openItem.title} />
+                {isVideo(slides[slide]?.src) ? <video key={slides[slide]?.src} src={slides[slide]?.src} controls autoPlay playsInline /> : <img src={slides[slide]?.src} alt={slides[slide]?.caption ?? openItem.title} />}
                 {slides.length > 1 && (
                   <button type="button" className="lightbox-nav" aria-label="Next image" onClick={() => setSlide((value) => (value + 1) % slides.length)}>
                     <ChevronRight />
