@@ -391,7 +391,7 @@ function Portfolio({
       if (!track) return;
       if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 8) track.scrollTo({ left: 0, behavior: "smooth" });
       else slideSocial(1);
-    }, 3000);
+    }, 2500);
     return () => window.clearInterval(id);
   }, [paused]);
   const slides = openItem?.images ?? [];
@@ -503,7 +503,7 @@ function Portfolio({
             <button type="button" onClick={() => slideSocial(1)} aria-label="More posts"><ChevronRight /></button>
           </div>
         </div>
-        <div className="social-slider" ref={sliderRef} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={() => setPaused(true)}>
+        <div className="social-slider" ref={sliderRef} onTouchStart={() => setPaused(true)} onTouchEnd={() => window.setTimeout(() => setPaused(false), 4000)}>
           {socialPosts.map((post, index) => (
             <button
               type="button"
@@ -531,7 +531,8 @@ function Portfolio({
             <a key={item.url} className="script-card" href={item.url} target="_blank" rel="noreferrer">
               <span>0{index + 1} · {item.kicker}</span>
               <b>{item.title}</b>
-              <i>Watch on Instagram ↗</i>
+              <i className="insta-link">▶ Watch reel on Instagram ↗</i>
+              <small className="insta-url">{item.url.replace("https://www.", "")}</small>
             </a>
           ))}
         </div>
