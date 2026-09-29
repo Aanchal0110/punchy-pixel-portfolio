@@ -499,3 +499,7 @@
 .gc-card { display: grid; gap: 6px; text-align: left; background: #fff; color: #1d1d1f; padding: 18px 20px; border-radius: 8px; }
 .gc-card span { color: #555; font-size: .9rem; }
 .gc-card i { font-style: normal; font-weight: 700; color: #c2410c; font-size: .85rem; }
+.portfolio-shell .gc-tile { background: #fff; border: 1px solid var(--pf-line); }
+.portfolio-shell .gc-tile .gc-logo { color: var(--pf-text); }
+.portfolio-shell .gc-logo-img { max-width: 62%; max-height: 42%; object-fit: contain; }
+.portfolio-shell .gc-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
