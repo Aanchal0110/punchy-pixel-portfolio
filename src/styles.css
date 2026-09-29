@@ -475,3 +475,27 @@
 .portfolio-shell .insta-link { display:inline-block; margin-top:12px; padding:8px 14px; border:2px solid var(--ink); border-radius:999px; background:var(--punch); color:var(--paper); font-style:normal; font-weight:700; }
 .portfolio-shell .insta-url { display:block; margin-top:8px; font-size:.75rem; opacity:.7; word-break:break-all; }
 .portfolio-shell .hero-copy h1.hero-name-small { font-size: clamp(2.2rem, 5vw, 3.6rem) !important; line-height: 1.05 !important; }
+
+/* Gari Cruze-style brand grid */
+.portfolio-shell .gc-hero { padding: clamp(48px,8vw,96px) clamp(22px,6vw,80px) 32px; text-align: center; }
+.portfolio-shell .gc-hero h1 { font-size: clamp(2rem,5vw,3.4rem); font-weight: 700; letter-spacing: -.02em; }
+.portfolio-shell .gc-hero p { color: var(--pf-muted); margin-top: 8px; }
+.portfolio-shell .gc-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; padding: 0 clamp(12px,4vw,60px) 64px; }
+@media (min-width: 768px) { .portfolio-shell .gc-grid { grid-template-columns: repeat(4,1fr); } }
+.portfolio-shell .gc-tile { position: relative; aspect-ratio: 1; background: var(--tile); color: #fff; display: grid; place-items: center; overflow: hidden; cursor: pointer; }
+.portfolio-shell .gc-logo { font-size: clamp(1.3rem,3vw,2.2rem); font-weight: 800; letter-spacing: -.01em; transition: transform .3s; text-align: center; padding: 0 10px; }
+.portfolio-shell .gc-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: rgba(0,0,0,.78); opacity: 0; transition: opacity .25s; font-weight: 700; padding: 12px; text-align: center; }
+.portfolio-shell .gc-label small { font-weight: 400; font-size: .75rem; opacity: .8; }
+.portfolio-shell .gc-tile:hover .gc-label, .portfolio-shell .gc-tile:focus-visible .gc-label { opacity: 1; }
+.portfolio-shell .gc-text { max-width: 760px; margin: 0 auto; border-bottom: 0; }
+.portfolio-shell .gc-text h2 { font-size: 2rem; font-weight: 700; margin-bottom: 18px; }
+.portfolio-shell .gc-text p, .portfolio-shell .gc-text li { font-size: 1.1rem; line-height: 1.7; }
+.portfolio-shell .gc-text ul { list-style: disc; padding-left: 22px; margin-bottom: 12px; }
+.gc-project { overflow-y: auto; }
+.gc-project-body { width: min(820px, 94vw); margin: 0 auto 60px; display: grid; gap: 18px; }
+.gc-project-sub { color: #ddd; text-align: center; }
+.gc-project-body figure img, .gc-project-body figure video { width: 100%; height: auto; display: block; border-radius: 6px; }
+.gc-project-body figcaption { color: #ccc; font-size: .85rem; margin-top: 6px; }
+.gc-card { display: grid; gap: 6px; text-align: left; background: #fff; color: #1d1d1f; padding: 18px 20px; border-radius: 8px; }
+.gc-card span { color: #555; font-size: .9rem; }
+.gc-card i { font-style: normal; font-weight: 700; color: #c2410c; font-size: .85rem; }

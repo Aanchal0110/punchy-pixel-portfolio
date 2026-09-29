@@ -98,7 +98,7 @@ type ShowcaseItem = {
   tags: string[];
   feature?: boolean;
   images?: { src: string; caption: string }[];
-  entries?: { title: string; copy: string }[];
+  entries?: { title: string; copy: string }[] | undefined;
   link?: string;
   linkLabel?: string;
 };
@@ -227,6 +227,39 @@ const showcase: ShowcaseItem[] = [
   },
 ];
 
+type Project = {
+  id: string; name: string; sub: string; logo: string; color: string; font?: string;
+  media?: { src: string; caption: string }[];
+  links?: { title: string; note: string; url: string }[];
+  entries?: { title: string; copy: string }[] | undefined;
+  scriptIds?: string[];
+  drive?: boolean;
+};
+const post = (i: number) => ({ src: socialPosts[i]!.src, caption: `${socialPosts[i]!.title} — ${socialPosts[i]!.copy}` });
+const serif = "Georgia, serif";
+const projects: Project[] = [
+  { id: "jio", name: "JioHotstar", sub: "Promo scripts, marketing ideas & release campaigns", logo: "JioHotstar", color: "#1f1147",
+    links: hotstarWork.map((h) => ({ title: h.title, note: h.kicker, url: h.url })),
+    entries: showcase.find((s) => s.id === "jiohotstar")?.entries, drive: true },
+  { id: "kss", name: "Kolkata Super Stars", sub: "ECL Season 3 social campaign", logo: "KSS", color: "#4b1d6e",
+    media: [0, 1, 2, 3, 4, 5].map(post), scriptIds: ["ecl-retention"] },
+  { id: "oyo", name: "OYO", sub: "Topical", logo: "OYO", color: "#e21d3a", media: [post(7)] },
+  { id: "boat", name: "boAt", sub: "Product ad", logo: "boAt", color: "#111111", media: [post(10)] },
+  { id: "colgate", name: "Colgate", sub: "Spec ad", logo: "Colgate", color: "#d2232a", font: serif, media: [post(8)] },
+  { id: "darkfantasy", name: "Sunfeast Dark Fantasy", sub: "Spec ad", logo: "Dark Fantasy", color: "#3a1f14", font: serif, media: [post(11)] },
+  { id: "yolo", name: "YOLO Lounge", sub: "Menu post", logo: "YOLO", color: "#0f6b5c", media: [post(13)] },
+  { id: "logistics", name: "Logistics", sub: "Air cargo social", logo: "Cargo", color: "#1b3a6b", media: [post(12)] },
+  { id: "reels", name: "Reels", sub: "Short-form video", logo: "Reels", color: "#c2410c", media: [6, 9, 14].map(post) },
+  { id: "britannia", name: "Britannia", sub: "Brand film script", logo: "Britannia", color: "#c8102e", font: serif, scriptIds: ["britannia"] },
+  { id: "brookebond", name: "Brooke Bond Red Label", sub: "Brand film script", logo: "Red Label", color: "#b91c1c", font: serif, scriptIds: ["brooke-bond"] },
+  { id: "fogg", name: "Fogg", sub: "Ad script", logo: "FOGG", color: "#0c0c0c", scriptIds: ["fogg"] },
+  { id: "amrutam", name: "Amrutam", sub: "Direct advertising script", logo: "Amrutam", color: "#6b4f1d", font: serif, scriptIds: ["amrutam"] },
+  { id: "halden", name: "Halden Luxury", sub: "Script", logo: "HALDEN", color: "#2b2b2b", font: serif, scriptIds: ["halden"] },
+  { id: "savewater", name: "Save Water", sub: "Public service campaign", logo: "Save Water", color: "#0369a1", scriptIds: ["save-water"] },
+  { id: "articles", name: "Articles", sub: "Football Express & finance writing", logo: "Articles", color: "#374151", font: serif,
+    entries: showcase.find((s) => s.id === "longform")?.entries },
+];
+
 function playTone(kind: "hit" | "win") {
   if (typeof window === "undefined") return;
   const AudioContextClass = window.AudioContext ??
@@ -256,7 +289,7 @@ function Index() {
   const [copied, setCopied] = useState("");
   const [contactOpen, setContactOpen] = useState(false);
   const transitionTimer = useRef<number | null>(null);
-  const knockedOut = hits >= 6;
+  const knockedOut = hits >= 3;
 
   useEffect(() => () => {
     if (transitionTimer.current) clearTimeout(transitionTimer.current);
@@ -266,11 +299,11 @@ function Index() {
     if (knockedOut || isHit) return;
     const next = hits + 1;
     setHits(next);
-    setHitWord(next === 6 ? "K.O.!" : (hitWords[(next - 1) % hitWords.length] ?? "BAM!"));
+    setHitWord(next === 3 ? "K.O.!" : (hitWords[(next - 1) % hitWords.length] ?? "BAM!"));
     setIsHit(true);
-    if (soundOn) playTone(next === 6 ? "win" : "hit");
+    if (soundOn) playTone(next === 3 ? "win" : "hit");
     window.setTimeout(() => setIsHit(false), 260);
-    if (next === 6) transitionTimer.current = window.setTimeout(() => setIntro(false), 1500);
+    if (next === 3) transitionTimer.current = window.setTimeout(() => setIntro(false), 1500);
   };
 
   const copyText = async (label: string, value: string) => {
@@ -368,282 +401,91 @@ function Portfolio({
   setContactOpen: (open: boolean) => void;
   replay: () => void;
 }) {
-  const [openItem, setOpenItem] = useState<ShowcaseItem | null>(null);
+  const [openProject, setOpenProject] = useState<Project | null>(null);
   const [openScript, setOpenScript] = useState<ScriptItem | null>(null);
-  const [slide, setSlide] = useState(0);
-  const sliderRef = useRef<HTMLDivElement | null>(null);
-  const openShowcase = (item: ShowcaseItem, index = 0) => {
-    setSlide(index);
-    setOpenItem(item);
-  };
-  const slideSocial = (direction: 1 | -1) => {
-    const track = sliderRef.current;
-    if (!track) return;
-    const card = track.querySelector<HTMLElement>(".social-card");
-    const step = card ? card.offsetWidth + 20 : track.clientWidth * 0.8;
-    track.scrollBy({ left: step * direction, behavior: "smooth" });
-  };
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused) return;
-    const id = window.setInterval(() => {
-      const track = sliderRef.current;
-      if (!track) return;
-      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 8) track.scrollTo({ left: 0, behavior: "smooth" });
-      else slideSocial(1);
-    }, 2500);
-    return () => window.clearInterval(id);
-  }, [paused]);
-  const slides = openItem?.images ?? [];
 
   return (
     <div className="portfolio-shell animate-fade-in">
       <nav className="site-nav">
-        <a href="#top" className="brand-lockup"><span>AS</span><b>ADITYA SALVE</b></a>
-        <div className="hidden items-center gap-6 md:flex">
-          <a href="#work" className="nav-link">Work</a>
-          <a href="#social" className="nav-link">Social</a>
-          <a href="#jiohotstar" className="nav-link">JioHotstar</a>
-          <a href="#scripts" className="nav-link">Scripts</a>
-          <a href="#experience" className="nav-link">Experience</a>
-          <a href="#about-me" className="nav-link">About</a>
+        <a href="#top" className="brand-lockup"><span>AS</span><b>Aditya Salve</b></a>
+        <div className="flex items-center gap-5">
+          <a href="#about" className="nav-link">About</a>
+          <a href="#random" className="nav-link">Random things</a>
+          <button type="button" className="nav-link" onClick={() => setContactOpen(true)}>Contact</button>
         </div>
-        <Button className="arcade-button h-10" onClick={() => setContactOpen(true)}><Mail /> Let&apos;s talk</Button>
       </nav>
 
-      <section id="top" className="hero-grid">
-        <div className="hero-copy">
-          <div className="eyebrow"><Sparkles /> AVAILABLE FOR THE NEXT BIG IDEA</div>
-          <h1 className="hero-name-small">ADITYA <span>SALVE.</span></h1>
-          <p className="hero-role">COPYWRITER</p>
-          <p className="hero-blurb">Heavyweight copy that packs a punch—and knows exactly when to pull one.</p>
-          <div className="flex flex-wrap gap-3">
-            <Button asChild className="arcade-button"><a href="#work">View work <ArrowDownRight /></a></Button>
-            <Button variant="outline" className="arcade-button" onClick={() => setContactOpen(true)}>Contact me <Send /></Button>
-            <Button asChild variant="outline" size="icon" className="arcade-icon">
-              <a href="https://www.linkedin.com/in/aditya-salve-4b51a3284" target="_blank" rel="noreferrer" aria-label="Visit Aditya's LinkedIn" title="LinkedIn"><Linkedin /></a>
-            </Button>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <div className="hero-stamp">WORDS<br />WITH<br />WEIGHT</div>
-          <img src={boxerImage} alt="Aditya Salve as a retro cartoon boxer" width={1024} height={1024} />
-          <div className="stat-tag"><b>4+</b><span>YEARS<br />WRITING</span></div>
-        </div>
+      <section id="top" className="gc-hero">
+        <h1>Aditya Salve</h1>
+        <p>Copywriter. Heavyweight copy that packs a punch.</p>
       </section>
 
-      <div className="ticker" aria-hidden="true"><div>CAMPAIGNS ★ SCRIPTS ★ SOCIAL ★ STRATEGY ★ FILMS ★ SPORTS ★ CAMPAIGNS ★ SCRIPTS ★ SOCIAL ★ STRATEGY ★</div></div>
-
-      <section id="work" className="section-block work-section">
-        <div className="section-kicker">01 / FEATURED WORK</div>
-        <div className="work-callout">
-          <div>
-            <span className="mini-badge">THE MAIN EVENT</span>
-            <h2>Campaign decks.<br />Scripts. Big swings.</h2>
-            <p>A ringside look at ideas made for screens, feeds, launches, and everything in between.</p>
-          </div>
-          <a className="work-link" href="https://drive.google.com/drive/folders/1f2I--YOtmPBb7sycgWypZ2JeeZ7Gh_HO" target="_blank" rel="noreferrer">
-            <BriefcaseBusiness />
-            <span>EXPLORE CAMPAIGN<br />DECKS &amp; SCRIPTS</span>
-            <ArrowUpRight />
-          </a>
-        </div>
-
-        <div className="showcase-grid">
-          {showcase.map((item) => (
-            <button
-              type="button"
-              key={item.id}
-              className={`showcase-card ${item.feature ? "is-feature" : ""}`}
-              onClick={() => openShowcase(item)}
-            >
-              <div className="showcase-media">
-                <img src={item.cover} alt={item.title} loading="lazy" />
-              </div>
-              <div className="showcase-body">
-                <span>{item.kicker}</span>
-                <b>{item.title}</b>
-                <p>{item.copy}</p>
-                <div className="showcase-tags">{item.tags.map((tag) => <i key={tag}>{tag}</i>)}</div>
-              </div>
-            </button>
-          ))}
-        </div>
+      <section className="gc-grid" aria-label="Work by brand">
+        {projects.map((project) => (
+          <button type="button" key={project.id} className="gc-tile" style={{ ["--tile" as string]: project.color }} onClick={() => setOpenProject(project)}>
+            <span className="gc-logo" style={{ fontFamily: project.font }}>{project.logo}</span>
+            <span className="gc-label">{project.name}<small>{project.sub}</small></span>
+          </button>
+        ))}
       </section>
 
-      <section id="scripts" className="section-block scripts-section">
-        <div className="section-kicker">01 / CAMPAIGN DECKS &amp; SCRIPTS</div>
-        <div className="social-head">
-          <div>
-            <h2>Scripts, start<br />to final frame.</h2>
-            <p>Brand films, public-service stories and performance scripts. Open any one to read it in full.</p>
-          </div>
-        </div>
-        <div className="scripts-grid">
-          {scripts.map((item) => (
-            <button type="button" key={item.id} className="script-card" onClick={() => setOpenScript(item)}>
-              <span>{item.brand}</span>
-              <b>{item.title}</b>
-              <p>{item.logline}</p>
-              <i>{item.format}</i>
-            </button>
-          ))}
-        </div>
+      <section id="about" className="section-block gc-text">
+        <h2>About</h2>
+        {aboutLines.map((line) => <p key={line}>{line}</p>)}
       </section>
 
-      <section id="social" className="section-block social-section">
-        <div className="section-kicker">02 / SOCIAL MEDIA</div>
-        <div className="social-head">
-          <div>
-            <h2>Campaign creatives<br />built for the feed.</h2>
-            <p>Posts, reels and topical ads for Kolkata Super Stars (ECL), OYO, boAt, Colgate, Dark Fantasy and more. Slide through and tap any post for the full-size view.</p>
-          </div>
-          <div className="slider-controls">
-            <button type="button" onClick={() => slideSocial(-1)} aria-label="Previous posts"><ChevronLeft /></button>
-            <button type="button" onClick={() => slideSocial(1)} aria-label="More posts"><ChevronRight /></button>
-          </div>
-        </div>
-        <div className="social-slider" ref={sliderRef} onTouchStart={() => setPaused(true)} onTouchEnd={() => window.setTimeout(() => setPaused(false), 4000)}>
-          {socialPosts.map((post, index) => (
-            <button
-              type="button"
-              key={post.title}
-              className="social-card"
-              onClick={() => openShowcase(socialShowcase, index)}
-              aria-label={`Open ${post.title} in full screen`}
-            >
-              <div className="social-media">{isVideo(post.src) ? <video src={post.src} muted loop playsInline autoPlay preload="metadata" /> : <img src={post.src} alt={post.title} loading="lazy" />}</div>
-              <div className="social-body">
-                <span>{post.kicker}</span>
-                <b>{post.title}</b>
-                <p>{post.copy}</p>
-              </div>
-            </button>
-          ))}
-        </div>
+      <section id="random" className="section-block gc-text">
+        <h2>Random things</h2>
+        <p><b>I prefer</b></p>
+        <ul>{prefers.map(([a, b]) => <li key={a}><b>{a}</b> over {b}</li>)}</ul>
+        <p>At this moment, there’s a 97% chance I’ll be reading something or watching something.</p>
       </section>
 
-      <section id="jiohotstar" className="section-block social-section">
-        <div className="section-kicker">03 / JIOHOTSTAR</div>
-        <div className="social-head"><div><h2>Work done for<br />JioHotstar.</h2><p>Promo scripts and marketing ideas that went live as reels.</p></div></div>
-        <div className="scripts-grid">
-          {hotstarWork.map((item, index) => (
-            <a key={item.url} className="script-card" href={item.url} target="_blank" rel="noreferrer">
-              <span>0{index + 1} · {item.kicker}</span>
-              <b>{item.title}</b>
-              <i className="insta-link">▶ Watch reel on Instagram ↗</i>
-              <small className="insta-url">{item.url.replace("https://www.", "")}</small>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block brands-section">
-        <div className="section-kicker">04 / CLIENTS &amp; BRANDS</div>
-        <div className="brands-head">
-          <h2>Brands I&apos;ve written for.</h2>
-          <p>Campaigns, social and long-form copy delivered for global brands, leagues and events.</p>
-        </div>
-        <div className="brand-grid">
-          {brands.map((brand) => <span className="brand-chip" key={brand}>{brand}</span>)}
-        </div>
-        <Button asChild className="arcade-button mt-8">
-          <a href="https://www.behance.net/gallery/247523423/Copywriter-Portfolio" target="_blank" rel="noreferrer">
-            View full portfolio on Behance <ArrowUpRight />
-          </a>
-        </Button>
-      </section>
-
-      <section id="experience" className="section-block experience-section">
-        <div className="section-heading"><div><span className="section-kicker">05 / FIGHT RECORD</span><h2>Experience</h2></div><span className="record-badge">4 ROUNDS · UNDEFEATED</span></div>
-        <div className="experience-list">
-          {experience.map((item, index) => (
-            <article className="experience-row" key={item.company}>
-              <span className="round-number">0{index + 1}</span>
-              <div><h3>{item.company}</h3><p className="role-line">{item.role} · {item.date}</p></div>
-              <p>{item.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="about" className="section-block skills-section">
-        <div className="section-kicker">06 / THE TOOLKIT</div>
-        <h2>Moves in the locker.</h2>
-        <div className="skill-grid">
-          {skills.map((skill, index) => <div className="skill-tile" key={skill}><span>0{index + 1}</span><b>{skill}</b><Sparkles /></div>)}
-        </div>
-      </section>
-
-      <section id="about-me" className="section-block skills-section">
-        <div className="section-kicker">07 / ABOUT ME</div>
-        <h2>About me.</h2>
-        <div className="about-copy">
-          {aboutLines.map((line) => <p key={line}>{line}</p>)}
-          <p><b>I prefer</b></p>
-          <ul>{prefers.map(([a, b]) => <li key={a}><b>{a}</b> over {b}</li>)}</ul>
-          <p>At this moment, there’s a 97% chance I’ll be reading something or watching something.</p>
-        </div>
-      </section>
-
-      <footer className="site-footer">
-        <div><span className="section-kicker">FINAL BELL</span><h2>Got a brief?<br /><em>Let&apos;s make it hit.</em></h2></div>
+      <footer id="contact" className="site-footer">
+        <div><h2>Got a brief?<br /><em>Let&apos;s make it hit.</em></h2></div>
         <div className="footer-actions">
           <a href="mailto:salveaditya15@gmail.com">salveaditya15@gmail.com <ArrowUpRight /></a>
           <a href="tel:+919326250513">+91 93262 50513 <Phone /></a>
-          <Button className="arcade-button" onClick={() => setContactOpen(true)}>Start a conversation <Send /></Button>
+          <a href="https://www.linkedin.com/in/aditya-salve-4b51a3284" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a>
         </div>
-        <div className="footer-base"><span>© 2026 ADITYA SALVE</span><Button variant="ghost" onClick={replay}><RotateCcw /> Play boxing again</Button></div>
+        <div className="footer-base"><span>© 2026 Aditya Salve</span><Button variant="ghost" onClick={replay}><RotateCcw /> Play boxing again</Button></div>
       </footer>
 
-      {openItem && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openItem.title} onClick={() => setOpenItem(null)}>
+      {openProject && (
+        <div className="lightbox gc-project" role="dialog" aria-modal="true" aria-label={openProject.name} onClick={() => setOpenProject(null)}>
           <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
-            <b>{openItem.title}</b>
-            <div className="flex items-center gap-2">
-              {openItem.link && (
-                <Button asChild variant="ghost" className="lightbox-close">
-                  <a href={openItem.link} target="_blank" rel="noreferrer">{openItem.linkLabel ?? "Open"} <ArrowUpRight /></a>
-                </Button>
-              )}
-              <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenItem(null)} aria-label="Close viewer"><X /></Button>
-            </div>
+            <b>{openProject.name}</b>
+            <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenProject(null)} aria-label="Close"><X /></Button>
           </div>
-          <div className="lightbox-body" onClick={(event) => event.stopPropagation()}>
-            {slides.length > 0 ? (
-              <>
-                {slides.length > 1 && (
-                  <button type="button" className="lightbox-nav" aria-label="Previous image" onClick={() => setSlide((value) => (value - 1 + slides.length) % slides.length)}>
-                    <ChevronLeft />
-                  </button>
-                )}
-                {isVideo(slides[slide]?.src) ? <video key={slides[slide]?.src} src={slides[slide]?.src} controls autoPlay playsInline /> : <img src={slides[slide]?.src} alt={slides[slide]?.caption ?? openItem.title} />}
-                {slides.length > 1 && (
-                  <button type="button" className="lightbox-nav" aria-label="Next image" onClick={() => setSlide((value) => (value + 1) % slides.length)}>
-                    <ChevronRight />
-                  </button>
-                )}
-              </>
-            ) : (
-              <div className="copy-list">
-                {openItem.entries?.map((entry) => (
-                  <article key={entry.title}><h4>{entry.title}</h4><p>{entry.copy}</p></article>
-                ))}
-              </div>
+          <div className="gc-project-body" onClick={(event) => event.stopPropagation()}>
+            <p className="gc-project-sub">{openProject.sub}</p>
+            {openProject.media?.map((item) => (
+              <figure key={item.src}>
+                {isVideo(item.src) ? <video src={item.src} controls playsInline preload="metadata" /> : <img src={item.src} alt={item.caption} loading="lazy" />}
+                <figcaption>{item.caption}</figcaption>
+              </figure>
+            ))}
+            {openProject.links?.map((link) => (
+              <a key={link.url} className="gc-card" href={link.url} target="_blank" rel="noreferrer"><b>{link.title}</b><span>{link.note}</span><i>▶ Watch on Instagram ↗</i></a>
+            ))}
+            {openProject.entries?.map((entry) => (
+              <div key={entry.title} className="gc-card"><b>{entry.title}</b><span>{entry.copy}</span></div>
+            ))}
+            {openProject.scriptIds?.map((id) => {
+              const script = scripts.find((item) => item.id === id);
+              return script ? (
+                <button type="button" key={id} className="gc-card" onClick={() => setOpenScript(script)}><b>{script.title}</b><span>{script.logline}</span><i>Read script →</i></button>
+              ) : null;
+            })}
+            {openProject.drive && (
+              <a className="gc-card" href="https://drive.google.com/drive/folders/1f2I--YOtmPBb7sycgWypZ2JeeZ7Gh_HO" target="_blank" rel="noreferrer"><b>Campaign decks &amp; scripts</b><i>Open Google Drive ↗</i></a>
             )}
           </div>
-          {slides.length > 1 && (
-            <div className="lightbox-foot" onClick={(event) => event.stopPropagation()}>
-              {slides.map((item, index) => (
-                <button key={item.src} type="button" data-active={index === slide} aria-label={`Image ${index + 1}`} onClick={() => setSlide(index)} />
-              ))}
-            </div>
-          )}
         </div>
       )}
 
       {openScript && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openScript.title} onClick={() => setOpenScript(null)}>
+        <div className="lightbox" style={{ zIndex: 140 }} role="dialog" aria-modal="true" aria-label={openScript.title} onClick={() => setOpenScript(null)}>
           <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
             <b>{openScript.brand} — {openScript.title}</b>
             <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenScript(null)} aria-label="Close script"><X /></Button>
