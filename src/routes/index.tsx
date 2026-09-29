@@ -27,6 +27,14 @@ import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
 import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
 import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
 import eclMissingAsset from "@/assets/ecl-missing-us.jpg.asset.json";
+import logoJioAsset from "@/assets/logo-jio.png.asset.json";
+import logoOyoAsset from "@/assets/logo-oyo.jpg.asset.json";
+import logoBoatAsset from "@/assets/logo-boat.svg.asset.json";
+import logoColgateAsset from "@/assets/logo-colgate.svg.asset.json";
+import logoBritanniaAsset from "@/assets/logo-britannia.png.asset.json";
+import logoBrookeBondAsset from "@/assets/logo-brookebond.jpg.asset.json";
+import logoAmrutamAsset from "@/assets/logo-amrutam.png.asset.json";
+import logoHaldenAsset from "@/assets/logo-halden.png.asset.json";
 import oyoAsset from "@/assets/oyo.png.asset.json";
 import colgateAsset from "@/assets/colgate.jpg.asset.json";
 import boatAsset from "@/assets/boat.png.asset.json";
@@ -228,36 +236,32 @@ const showcase: ShowcaseItem[] = [
 ];
 
 type Project = {
-  id: string; name: string; sub: string; logo: string; color: string; font?: string;
+  id: string; name: string; logo?: string; cover?: string;
   media?: { src: string; caption: string }[];
-  links?: { title: string; note: string; url: string }[];
-  entries?: { title: string; copy: string }[] | undefined;
+  links?: { title: string; url: string }[];
   scriptIds?: string[];
-  drive?: boolean;
 };
-const post = (i: number) => ({ src: socialPosts[i]!.src, caption: `${socialPosts[i]!.title} — ${socialPosts[i]!.copy}` });
-const serif = "Georgia, serif";
+const post = (i: number) => ({ src: socialPosts[i]!.src, caption: "" });
 const projects: Project[] = [
-  { id: "jio", name: "JioHotstar", sub: "Promo scripts, marketing ideas & release campaigns", logo: "JioHotstar", color: "#1f1147",
-    links: hotstarWork.map((h) => ({ title: h.title, note: h.kicker, url: h.url })),
-    entries: showcase.find((s) => s.id === "jiohotstar")?.entries, drive: true },
-  { id: "kss", name: "Kolkata Super Stars", sub: "ECL Season 3 social campaign", logo: "KSS", color: "#4b1d6e",
-    media: [0, 1, 2, 3, 4, 5].map(post), scriptIds: ["ecl-retention"] },
-  { id: "oyo", name: "OYO", sub: "Topical", logo: "OYO", color: "#e21d3a", media: [post(7)] },
-  { id: "boat", name: "boAt", sub: "Product ad", logo: "boAt", color: "#111111", media: [post(10)] },
-  { id: "colgate", name: "Colgate", sub: "Spec ad", logo: "Colgate", color: "#d2232a", font: serif, media: [post(8)] },
-  { id: "darkfantasy", name: "Sunfeast Dark Fantasy", sub: "Spec ad", logo: "Dark Fantasy", color: "#3a1f14", font: serif, media: [post(11)] },
-  { id: "yolo", name: "YOLO Lounge", sub: "Menu post", logo: "YOLO", color: "#0f6b5c", media: [post(13)] },
-  { id: "logistics", name: "Logistics", sub: "Air cargo social", logo: "Cargo", color: "#1b3a6b", media: [post(12)] },
-  { id: "reels", name: "Reels", sub: "Short-form video", logo: "Reels", color: "#c2410c", media: [6, 9, 14].map(post) },
-  { id: "britannia", name: "Britannia", sub: "Brand film script", logo: "Britannia", color: "#c8102e", font: serif, scriptIds: ["britannia"] },
-  { id: "brookebond", name: "Brooke Bond Red Label", sub: "Brand film script", logo: "Red Label", color: "#b91c1c", font: serif, scriptIds: ["brooke-bond"] },
-  { id: "fogg", name: "Fogg", sub: "Ad script", logo: "FOGG", color: "#0c0c0c", scriptIds: ["fogg"] },
-  { id: "amrutam", name: "Amrutam", sub: "Direct advertising script", logo: "Amrutam", color: "#6b4f1d", font: serif, scriptIds: ["amrutam"] },
-  { id: "halden", name: "Halden Luxury", sub: "Script", logo: "HALDEN", color: "#2b2b2b", font: serif, scriptIds: ["halden"] },
-  { id: "savewater", name: "Save Water", sub: "Public service campaign", logo: "Save Water", color: "#0369a1", scriptIds: ["save-water"] },
-  { id: "articles", name: "Articles", sub: "Football Express & finance writing", logo: "Articles", color: "#374151", font: serif,
-    entries: showcase.find((s) => s.id === "longform")?.entries },
+  { id: "jio", name: "JioHotstar", logo: logoJioAsset.url, links: [
+    { title: "Promo script for Rebel Kid", url: "https://www.instagram.com/reel/DQGpKSPCpRX/" },
+    { title: "Marketing ideas for the upcoming series Mrs Deshpande", url: "https://www.instagram.com/reel/DRPBaj4DEj9/" },
+    { title: "JioHotstar reel", url: "https://www.instagram.com/reel/DPq7RoVExeq/" },
+  ] },
+  { id: "kss", name: "Kolkata Super Stars", cover: socialPosts[0]!.src, media: [0, 1, 2, 3, 4, 5].map(post), scriptIds: ["ecl-retention"] },
+  { id: "oyo", name: "OYO", logo: logoOyoAsset.url, media: [post(7)] },
+  { id: "boat", name: "boAt", logo: logoBoatAsset.url, media: [post(10)] },
+  { id: "colgate", name: "Colgate", logo: logoColgateAsset.url, media: [post(8)] },
+  { id: "darkfantasy", name: "Sunfeast Dark Fantasy", cover: socialPosts[11]!.src, media: [post(11)] },
+  { id: "yolo", name: "YOLO Lounge", cover: socialPosts[13]!.src, media: [post(13)] },
+  { id: "logistics", name: "Logistics", cover: socialPosts[12]!.src, media: [post(12)] },
+  { id: "britannia", name: "Britannia", logo: logoBritanniaAsset.url, scriptIds: ["britannia"] },
+  { id: "brookebond", name: "Brooke Bond Red Label", logo: logoBrookeBondAsset.url, scriptIds: ["brooke-bond"] },
+  { id: "amrutam", name: "Amrutam", logo: logoAmrutamAsset.url, scriptIds: ["amrutam"] },
+  { id: "halden", name: "Halden Luxury", logo: logoHaldenAsset.url, scriptIds: ["halden"] },
+  { id: "fogg", name: "Fogg", scriptIds: ["fogg"] },
+  { id: "savewater", name: "Save Water", scriptIds: ["save-water"] },
+  { id: "reels", name: "Reels", media: [6, 9, 14].map(post) },
 ];
 
 function playTone(kind: "hit" | "win") {
@@ -409,7 +413,6 @@ function Portfolio({
       <nav className="site-nav">
         <a href="#top" className="brand-lockup"><span>AS</span><b>Aditya Salve</b></a>
         <div className="flex items-center gap-5">
-          <a href="#about" className="nav-link">About</a>
           <a href="#random" className="nav-link">Random things</a>
           <button type="button" className="nav-link" onClick={() => setContactOpen(true)}>Contact</button>
         </div>
@@ -422,20 +425,16 @@ function Portfolio({
 
       <section className="gc-grid" aria-label="Work by brand">
         {projects.map((project) => (
-          <button type="button" key={project.id} className="gc-tile" style={{ ["--tile" as string]: project.color }} onClick={() => setOpenProject(project)}>
-            <span className="gc-logo" style={{ fontFamily: project.font }}>{project.logo}</span>
-            <span className="gc-label">{project.name}<small>{project.sub}</small></span>
+          <button type="button" key={project.id} className={`gc-tile ${project.cover ? "has-cover" : ""}`} onClick={() => setOpenProject(project)} aria-label={project.name}>
+            {project.logo ? <img className="gc-logo-img" src={project.logo} alt={`${project.name} logo`} loading="lazy" /> : project.cover ? <img className="gc-cover" src={project.cover} alt={project.name} loading="lazy" /> : <span className="gc-logo">{project.name}</span>}
+            <span className="gc-label">{project.name}</span>
           </button>
         ))}
       </section>
 
-      <section id="about" className="section-block gc-text">
-        <h2>About</h2>
-        {aboutLines.map((line) => <p key={line}>{line}</p>)}
-      </section>
-
       <section id="random" className="section-block gc-text">
         <h2>Random things</h2>
+        {aboutLines.map((line) => <p key={line}>{line}</p>)}
         <p><b>I prefer</b></p>
         <ul>{prefers.map(([a, b]) => <li key={a}><b>{a}</b> over {b}</li>)}</ul>
         <p>At this moment, there’s a 97% chance I’ll be reading something or watching something.</p>
@@ -458,18 +457,14 @@ function Portfolio({
             <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenProject(null)} aria-label="Close"><X /></Button>
           </div>
           <div className="gc-project-body" onClick={(event) => event.stopPropagation()}>
-            <p className="gc-project-sub">{openProject.sub}</p>
-            {openProject.media?.map((item) => (
+                        {openProject.media?.map((item) => (
               <figure key={item.src}>
-                {isVideo(item.src) ? <video src={item.src} controls playsInline preload="metadata" /> : <img src={item.src} alt={item.caption} loading="lazy" />}
-                <figcaption>{item.caption}</figcaption>
+                {isVideo(item.src) ? <video src={item.src} controls playsInline preload="metadata" /> : <img src={item.src} alt={openProject.name} loading="lazy" />}
+                
               </figure>
             ))}
             {openProject.links?.map((link) => (
-              <a key={link.url} className="gc-card" href={link.url} target="_blank" rel="noreferrer"><b>{link.title}</b><span>{link.note}</span><i>▶ Watch on Instagram ↗</i></a>
-            ))}
-            {openProject.entries?.map((entry) => (
-              <div key={entry.title} className="gc-card"><b>{entry.title}</b><span>{entry.copy}</span></div>
+              <a key={link.url} className="gc-card" href={link.url} target="_blank" rel="noreferrer"><b>{link.title}</b><i>▶ Watch on Instagram ↗</i></a>
             ))}
             {openProject.scriptIds?.map((id) => {
               const script = scripts.find((item) => item.id === id);
@@ -477,9 +472,6 @@ function Portfolio({
                 <button type="button" key={id} className="gc-card" onClick={() => setOpenScript(script)}><b>{script.title}</b><span>{script.logline}</span><i>Read script →</i></button>
               ) : null;
             })}
-            {openProject.drive && (
-              <a className="gc-card" href="https://drive.google.com/drive/folders/1f2I--YOtmPBb7sycgWypZ2JeeZ7Gh_HO" target="_blank" rel="noreferrer"><b>Campaign decks &amp; scripts</b><i>Open Google Drive ↗</i></a>
-            )}
           </div>
         </div>
       )}
