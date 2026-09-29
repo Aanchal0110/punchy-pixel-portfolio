@@ -1,0 +1,8 @@
+# Netlify deploy settings. Lovable ignores this file and keeps building for its own hosting.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NITRO_PRESET = "netlify"
+  NODE_VERSION = "22"
