@@ -1,51 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Clipboard,
-  Linkedin,
-  Mail,
-  Phone,
-  RotateCcw,
-  Send,
-  Sparkles,
-  Volume2,
-  VolumeX,
-  X,
-} from "lucide-react";
+import { ChevronRight, Volume2, VolumeX, X } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
-import clientsBanner from "@/assets/clients-banner.png";
-import eclAuctionAsset from "@/assets/ecl-player-auction.jpg.asset.json";
-import eclBallAsset from "@/assets/ecl-guess-the-ball.jpg.asset.json";
-import eclCaptainAsset from "@/assets/ecl-captain-retained.jpg.asset.json";
-import eclStayTunedAsset from "@/assets/ecl-stay-tuned.jpg.asset.json";
-import eclSuperstarsAsset from "@/assets/ecl-superstars-assembled.jpg.asset.json";
-import eclMissingAsset from "@/assets/ecl-missing-us.jpg.asset.json";
-import logoJioAsset from "@/assets/logo-jio.png.asset.json";
-import logoOyoAsset from "@/assets/logo-oyo.jpg.asset.json";
-import logoBoatAsset from "@/assets/logo-boat.svg.asset.json";
-import logoColgateAsset from "@/assets/logo-colgate.svg.asset.json";
-import logoBritanniaAsset from "@/assets/logo-britannia.png.asset.json";
-import logoBrookeBondAsset from "@/assets/logo-brookebond.jpg.asset.json";
-import logoAmrutamAsset from "@/assets/logo-amrutam.png.asset.json";
-import logoHaldenAsset from "@/assets/logo-halden.png.asset.json";
-import oyoAsset from "@/assets/oyo.png.asset.json";
-import colgateAsset from "@/assets/colgate.jpg.asset.json";
-import boatAsset from "@/assets/boat.png.asset.json";
-import darkFantasyAsset from "@/assets/dark-fantasy.jpg.asset.json";
-import logisticsAsset from "@/assets/logistics.jpg.asset.json";
-import yoloAsset from "@/assets/yolo.jpg.asset.json";
-import reel1Asset from "@/assets/reel-1.mp4.asset.json";
-import reel2Asset from "@/assets/reel-2.mp4.asset.json";
-import reel3Asset from "@/assets/reel-3.mp4.asset.json";
+import logoAmex from "@/assets/clients/amex.png";
+import logoEbco from "@/assets/clients/ebco.png";
+import logoJioHotstar from "@/assets/clients/jiohotstar.png";
+import logoKss from "@/assets/clients/kolkata-superstars.png";
+import logoLyke from "@/assets/clients/lyke.png";
+import logoNatGeo from "@/assets/clients/natgeo.png";
+import logoSkybags from "@/assets/clients/skybags.png";
+import logoTransUnion from "@/assets/clients/transunion.png";
+import logoVyoma from "@/assets/clients/vyoma.png";
+import logoYolo from "@/assets/clients/yolo.png";
 import { Button } from "@/components/ui/button";
+import { SiteShell } from "@/components/site-chrome";
 import { scripts, type ScriptItem } from "@/data/scripts";
+import { specAds, workMedia } from "@/data/work";
+import { gate } from "@/lib/gate";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,7 +30,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Aditya Salve — Copywriter" },
       {
         property: "og:description",
-        content: "Heavyweight copy that packs a punch. Explore campaigns, scripts, and experience.",
+        content: "Some copies I made for some clients.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -67,202 +39,45 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const experience = [
-  {
-    company: "SoCheers",
-    role: "Copywriter",
-    date: "Sept 2025 — Present",
-    copy: "Campaign thinking for JioHotstar releases including Annabelle, M3GAN 2.0, Jurassic World: Rebirth, Final Destination, and Alien: Earth. Multi-platform promotions and scripts for lifestyle show Spice It Up.",
-  },
-  {
-    company: "The small big ideas",
-    role: "Copywriter Intern",
-    date: "Mar — Jul 2025",
-    copy: "Content for sports teams and OTT platforms, plus pre-launch marketing ideas for film and television projects.",
-  },
-  {
-    company: "Zion Media",
-    role: "Content Writer",
-    date: "2023 — 2024",
-    copy: "Shaped distinct voices across websites, social media, and newsletters—making every format sound made for its audience.",
-  },
-  {
-    company: "Six Sports",
-    role: "Content Writer",
-    date: "2022 — 2023",
-    copy: "Turned in-depth research on sporting events, teams, and athletes into informed, engaging stories.",
-  },
-];
+const MAX_HP = 3;
+const hitWords = ["BAM!", "POW!"];
 
-const skills = ["Platform expertise", "Content creation", "Communication", "Creativity", "Strategic thinking"];
-const hitWords = ["BAM!", "POW!", "OUCH!", "WHAM!", "KAPOW!"];
-
-type ShowcaseItem = {
+type Client = {
   id: string;
-  kicker: string;
-  title: string;
-  copy: string;
-  cover: string;
-  tags: string[];
-  feature?: boolean;
-  images?: { src: string; caption: string }[];
-  entries?: { title: string; copy: string }[] | undefined;
-  link?: string;
-  linkLabel?: string;
-};
-
-const brands = [
-  "L&T Vyoma",
-  "Ebco",
-  "NatGeo",
-  "TransUnion CIBIL",
-  "Skybags",
-  "JioHotstar",
-  "Kolkata Super Stars",
-  "Six Sports",
-];
-
-const socialPosts: { title: string; kicker: string; copy: string; src: string }[] = [
-  {
-    title: "Superstars Assembled",
-    kicker: "ECL Season 3 · Retentions",
-    copy: "Squad reveal creative announcing the retained Kolkata Super Stars line-up for the new season.",
-    src: eclSuperstarsAsset.url,
-  },
-  {
-    title: "Welcome Back, Captain",
-    kicker: "Retention announcement",
-    copy: "Pushkar Raj Thakur retained as captain — a hero-led post built for maximum fan reaction.",
-    src: eclCaptainAsset.url,
-  },
-  {
-    title: "Guess the Ball",
-    kicker: "Matchday engagement",
-    copy: "Interactive comment-bait post turning a still frame into a guessing game for the feed.",
-    src: eclBallAsset.url,
-  },
-  {
-    title: "Player Auction",
-    kicker: "15th June announcement",
-    copy: "Auction day announcement creative with date-led urgency and league branding.",
-    src: eclAuctionAsset.url,
-  },
-  {
-    title: "Stay Tuned",
-    kicker: "Retained players teaser",
-    copy: "Teaser post keeping the audience hooked ahead of the full retention reveal.",
-    src: eclStayTunedAsset.url,
-  },
-  { title: "Missing Us?", kicker: "ECL · Off-season teaser", copy: "“The lethal duo will be back.” A comeback tease that keeps fans talking between seasons.", src: eclMissingAsset.url },
-  { title: "Campaign Reel 01", kicker: "Video · Reel", copy: "Short-form reel written for thumb-stopping first seconds and a clean payoff.", src: reel1Asset.url },
-  { title: "Hum Dila Denge", kicker: "OYO · Topical", copy: "“Tamilnadu me Kamra? Hum dila denge.” A topical one-liner riding the news cycle.", src: oyoAsset.url },
-  { title: "White Privilege at $5.47", kicker: "Colgate · Spec ad", copy: "A cheeky double-meaning headline for a whitening toothpaste.", src: colgateAsset.url },
-  { title: "Campaign Reel 02", kicker: "Video · Reel", copy: "Story-led reel built for the feed — hook, turn, brand.", src: reel2Asset.url },
-  { title: "Kashmir to Kanyakumari", kicker: "boAt · Product ad", copy: "72 hours of playback, sold as a road trip across India — in one charge.", src: boatAsset.url },
-  { title: "Some Are Sweet Too", kicker: "Sunfeast Dark Fantasy · Spec ad", copy: "“Not all dark fantasies are twisted.” Playing with the brand name for a wink.", src: darkFantasyAsset.url },
-  { title: "Others Try, We Deliver", kicker: "Logistics · Social", copy: "A confident, competitor-baiting line for an air-cargo brand.", src: logisticsAsset.url },
-  { title: "Dragon Served Chilled", kicker: "YOLO Lounge · Menu post", copy: "A dragon-fruit cooler introduced with a line that sounds like a legend.", src: yoloAsset.url },
-  { title: "Campaign Reel 03", kicker: "Video · Reel", copy: "Fast-cut reel copy paced for sound-on and sound-off viewing.", src: reel3Asset.url },
-];
-
-const isVideo = (src?: string) => !!src && src.endsWith(".mp4");
-
-const hotstarWork = [
-  { title: "Rebel Kid", kicker: "Promo script", url: "https://www.instagram.com/reel/DQGpKSPCpRX/" },
-  { title: "Mrs Deshpande", kicker: "Marketing ideas for the upcoming series", url: "https://www.instagram.com/reel/DRPBaj4DEj9/" },
-  { title: "JioHotstar Reel", kicker: "Campaign work", url: "https://www.instagram.com/reel/DPq7RoVExeq/" },
-];
-
-const aboutLines = [
-  "I laugh in serious situations.",
-  "I watch television a lot; my electricity bill speaks for itself.",
-  "I like to watch documentaries about the Caribbean and Latin America.",
-  "I would love to live that life on the coast, but with money.",
-  "I’m an introvert (for the first few days).",
-];
-const prefers = [["Ronaldo", "Messi"], ["Djokovic", "Federer"], ["Twitter", "Instagram"], ["Generational wealth", "anything"]];
-
-const socialShowcase: ShowcaseItem = {
-  id: "ecl",
-  kicker: "Social campaign",
-  title: "Kolkata Super Stars — ECL Season 3",
-  copy: "Season-long social campaign creatives.",
-  cover: eclSuperstarsAsset.url,
-  tags: [],
-  images: socialPosts.map((post) => ({ src: post.src, caption: `${post.title} — ${post.kicker}` })),
-};
-
-const showcase: ShowcaseItem[] = [
-  {
-    id: "clients",
-    kicker: "Client roster",
-    title: "Clients I've worked with",
-    copy: "L&T Vyoma, Ebco, NatGeo, TransUnion CIBIL, Skybags, JioHotstar, Kolkata Super Stars and Six Sports.",
-    cover: clientsBanner,
-    tags: ["Brands", "Campaigns"],
-    feature: true,
-    images: [{ src: clientsBanner, caption: "Clients I've worked with" }],
-    link: "https://www.behance.net/gallery/247523423/Copywriter-Portfolio",
-    linkLabel: "Open on Behance",
-  },
-  {
-    id: "jiohotstar",
-    kicker: "Entertainment",
-    title: "JioHotstar campaign copy & scripts",
-    copy: "Release campaigns and promo scripts across film and series launches on JioHotstar.",
-    cover: boxerImage,
-    tags: ["Scripts", "Promos", "OTT"],
-    entries: [
-      { title: "Jurassic World: Rebirth", copy: "Launch campaign copy and multi-platform promo beats built around the franchise's return." },
-      { title: "M3GAN 2.0", copy: "Sharp, sardonic social copy in M3GAN's own voice for the sequel release." },
-      { title: "Final Destination: Bloodlines", copy: "Tension-led teaser lines and countdown posts for the release window." },
-      { title: "Alien: Earth", copy: "Atmospheric campaign writing for the series drop." },
-      { title: "Mrs Deshpande", copy: "Character-first promo copy and platform adaptations." },
-      { title: "Rebel Kid", copy: "Creator-led campaign copy tuned for a young, social-native audience." },
-    ],
-  },
-  {
-    id: "longform",
-    kicker: "Long-form",
-    title: "Articles & editorial",
-    copy: "Football Express blogs plus finance and large-cap stock explainers written for non-expert readers.",
-    cover: eclBallAsset.url,
-    tags: ["Blogs", "Finance", "Research"],
-    entries: [
-      { title: "Football Express blogs", copy: "Match reports, player features and event deep-dives turned into readable, opinionated stories." },
-      { title: "Large-cap stocks & finance", copy: "Research-heavy explainers that make market movements and company fundamentals easy to follow." },
-    ],
-  },
-];
-
-type Project = {
-  id: string; name: string; logo?: string; cover?: string;
-  media?: { src: string; caption: string }[];
+  name: string;
+  logo?: string;
+  // "cover" fills the tile with the logo artwork; "contain" centres it on white.
+  fit?: "cover" | "contain";
+  work?: string;
+  media?: string[];
   links?: { title: string; url: string }[];
   scriptIds?: string[];
 };
-const post = (i: number) => ({ src: socialPosts[i]!.src, caption: "" });
-const projects: Project[] = [
-  { id: "jio", name: "JioHotstar", logo: logoJioAsset.url, links: [
-    { title: "Promo script for Rebel Kid", url: "https://www.instagram.com/reel/DQGpKSPCpRX/" },
-    { title: "Marketing ideas for the upcoming series Mrs Deshpande", url: "https://www.instagram.com/reel/DRPBaj4DEj9/" },
-    { title: "JioHotstar reel", url: "https://www.instagram.com/reel/DPq7RoVExeq/" },
-  ] },
-  { id: "kss", name: "Kolkata Super Stars", cover: socialPosts[0]!.src, media: [0, 1, 2, 3, 4, 5].map(post), scriptIds: ["ecl-retention"] },
-  { id: "oyo", name: "OYO", logo: logoOyoAsset.url, media: [post(7)] },
-  { id: "boat", name: "boAt", logo: logoBoatAsset.url, media: [post(10)] },
-  { id: "colgate", name: "Colgate", logo: logoColgateAsset.url, media: [post(8)] },
-  { id: "darkfantasy", name: "Sunfeast Dark Fantasy", cover: socialPosts[11]!.src, media: [post(11)] },
-  { id: "yolo", name: "YOLO Lounge", cover: socialPosts[13]!.src, media: [post(13)] },
-  { id: "logistics", name: "Logistics", cover: socialPosts[12]!.src, media: [post(12)] },
-  { id: "britannia", name: "Britannia", logo: logoBritanniaAsset.url, scriptIds: ["britannia"] },
-  { id: "brookebond", name: "Brooke Bond Red Label", logo: logoBrookeBondAsset.url, scriptIds: ["brooke-bond"] },
-  { id: "amrutam", name: "Amrutam", logo: logoAmrutamAsset.url, scriptIds: ["amrutam"] },
-  { id: "halden", name: "Halden Luxury", logo: logoHaldenAsset.url, scriptIds: ["halden"] },
-  { id: "fogg", name: "Fogg", scriptIds: ["fogg"] },
-  { id: "savewater", name: "Save Water", scriptIds: ["save-water"] },
-  { id: "reels", name: "Reels", media: [6, 9, 14].map(post) },
+
+const clients: Client[] = [
+  {
+    id: "jiohotstar", name: "JioHotstar", logo: logoJioHotstar, fit: "cover",
+    work: "Worked on their social media page and helped with marketing ideas for the launch of their upcoming films.",
+    links: [
+      { title: "Promo script for Rebel Kid", url: "https://www.instagram.com/reel/DQGpKSPCpRX/" },
+      { title: "Marketing ideas for the upcoming series Mrs Deshpande", url: "https://www.instagram.com/reel/DRPBaj4DEj9/" },
+      { title: "JioHotstar reel", url: "https://www.instagram.com/reel/DPq7RoVExeq/" },
+    ],
+  },
+  { id: "natgeo", name: "NatGeo", logo: logoNatGeo, fit: "cover", work: "Topical emailers and marketing ideas for their upcoming shows." },
+  { id: "ebco", name: "Ebco", logo: logoEbco, fit: "cover", work: "Topical social media posts and emailers for ideas for new product launches.", media: workMedia.ebco },
+  { id: "vyoma", name: "L&T Vyoma", logo: logoVyoma, fit: "contain", work: "Website copy, social media posts & data center interior wall designs.", media: workMedia.vyoma },
+  { id: "transunion", name: "TransUnion", logo: logoTransUnion, fit: "contain", work: "Ideas for campaigns and BAU emailers.", media: workMedia.transunion },
+  { id: "amex", name: "Amex", logo: logoAmex, fit: "cover", work: "Wrote emailers for different cardholders.", media: workMedia.amex },
+  { id: "sukhin", name: "Sukhin", work: "Social media posts.", media: workMedia.sukhin },
+  { id: "lyke", name: "LYKE", logo: logoLyke, fit: "cover", work: "Wrote social media posts.", media: workMedia.lyke },
+  { id: "kss", name: "Kolkata Superstars", logo: logoKss, fit: "cover", work: "Managed their social media account.", media: workMedia.kss, scriptIds: ["ecl-retention"] },
+  { id: "yolo", name: "Yolo", logo: logoYolo, fit: "contain", work: "Created social media posts.", media: workMedia.yolo },
+  { id: "ihcl", name: "IHCL", media: workMedia.ihcl },
+  { id: "skybags", name: "Skybags", logo: logoSkybags, fit: "cover", media: workMedia.skybags },
 ];
+
+const isVideo = (src: string) => src.endsWith(".mp4");
 
 function playTone(kind: "hit" | "win") {
   if (typeof window === "undefined") return;
@@ -285,42 +100,39 @@ function playTone(kind: "hit" | "win") {
 }
 
 function Index() {
-  const [intro, setIntro] = useState(true);
+  const [intro, setIntro] = useState(() => !gate.passed);
   const [hits, setHits] = useState(0);
   const [hitWord, setHitWord] = useState("");
   const [isHit, setIsHit] = useState(false);
   const [soundOn, setSoundOn] = useState(true);
-  const [copied, setCopied] = useState("");
-  const [contactOpen, setContactOpen] = useState(false);
   const transitionTimer = useRef<number | null>(null);
-  const knockedOut = hits >= 3;
+  const knockedOut = hits >= MAX_HP;
+  const hp = Math.max(0, MAX_HP - hits);
 
   useEffect(() => () => {
     if (transitionTimer.current) clearTimeout(transitionTimer.current);
   }, []);
 
+  const finishIntro = () => {
+    gate.passed = true;
+    setIntro(false);
+  };
+
   const punch = () => {
     if (knockedOut || isHit) return;
     const next = hits + 1;
     setHits(next);
-    setHitWord(next === 3 ? "K.O.!" : (hitWords[(next - 1) % hitWords.length] ?? "BAM!"));
+    setHitWord(next === MAX_HP ? "K.O.!" : (hitWords[(next - 1) % hitWords.length] ?? "BAM!"));
     setIsHit(true);
-    if (soundOn) playTone(next === 3 ? "win" : "hit");
+    if (soundOn) playTone(next === MAX_HP ? "win" : "hit");
     window.setTimeout(() => setIsHit(false), 260);
-    if (next === 3) transitionTimer.current = window.setTimeout(() => setIntro(false), 1500);
-  };
-
-  const copyText = async (label: string, value: string) => {
-    await navigator.clipboard.writeText(value);
-    setCopied(label);
-    window.setTimeout(() => setCopied(""), 1600);
+    if (next === MAX_HP) transitionTimer.current = window.setTimeout(finishIntro, 1500);
   };
 
   const replay = () => {
     setHits(0);
     setHitWord("");
     setIntro(true);
-    window.scrollTo({ top: 0 });
   };
 
   return (
@@ -348,12 +160,12 @@ function Index() {
             </div>
 
             <div className="fight-stage">
-              <div className="health-wrap" aria-label={`${Math.max(0, 6 - hits)} hits remaining`}>
+              <div className="health-wrap" aria-label={`${hp} hits remaining`}>
                 <div className="flex items-end justify-between">
                   <span className="pixel-label">ADITYA</span>
-                  <span className="pixel-label">{knockedOut ? "DOWN" : `${6 - hits} HP`}</span>
+                  <span className="pixel-label">{knockedOut ? "DOWN" : `${hp} HP`}</span>
                 </div>
-                <div className="health-track"><div className="health-fill" style={{ width: `${Math.max(0, (6 - hits) / 6 * 100)}%` }} /></div>
+                <div className="health-track"><div className="health-fill" style={{ width: `${(hp / MAX_HP) * 100}%` }} /></div>
               </div>
 
               <button
@@ -374,99 +186,131 @@ function Index() {
               )}
             </div>
 
-            <Button variant="ghost" className="skip-button" onClick={() => setIntro(false)}>
+            <Button variant="ghost" className="skip-button" onClick={finishIntro}>
               Skip to portfolio <ChevronRight />
             </Button>
           </div>
         </section>
       ) : (
-        <Portfolio
-          copied={copied}
-          copyText={copyText}
-          contactOpen={contactOpen}
-          setContactOpen={setContactOpen}
-          replay={replay}
-        />
+        <Portfolio replay={replay} />
       )}
     </main>
   );
 }
 
-function Portfolio({
-  copied,
-  copyText,
-  contactOpen,
-  setContactOpen,
-  replay,
-}: {
-  copied: string;
-  copyText: (label: string, value: string) => void;
-  contactOpen: boolean;
-  setContactOpen: (open: boolean) => void;
-  replay: () => void;
-}) {
-  const [openProject, setOpenProject] = useState<Project | null>(null);
+function Portfolio({ replay }: { replay: () => void }) {
+  const [openClient, setOpenClient] = useState<Client | null>(null);
   const [openScript, setOpenScript] = useState<ScriptItem | null>(null);
+  const [flippedId, setFlippedId] = useState<string | null>(null);
+  const [openSpec, setOpenSpec] = useState<string | null>(null);
+  const [scriptsOpen, setScriptsOpen] = useState(false);
 
   return (
-    <div className="portfolio-shell animate-fade-in">
-      <nav className="site-nav">
-        <a href="#top" className="brand-lockup"><span>AS</span><b>Aditya Salve</b></a>
-        <div className="flex items-center gap-5">
-          <a href="#random" className="nav-link">Random things</a>
-          <button type="button" className="nav-link" onClick={() => setContactOpen(true)}>Contact</button>
-        </div>
-      </nav>
-
+    <SiteShell onReplay={replay}>
       <section id="top" className="gc-hero">
-        <h1>Aditya Salve</h1>
-        <p>Copywriter. Heavyweight copy that packs a punch.</p>
+        <h1>Some copies I made for some clients.</h1>
       </section>
 
-      <section className="gc-grid" aria-label="Work by brand">
-        {projects.map((project) => (
-          <button type="button" key={project.id} className={`gc-tile ${project.cover ? "has-cover" : ""}`} onClick={() => setOpenProject(project)} aria-label={project.name}>
-            {project.logo ? <img className="gc-logo-img" src={project.logo} alt={`${project.name} logo`} loading="lazy" /> : project.cover ? <img className="gc-cover" src={project.cover} alt={project.name} loading="lazy" /> : <span className="gc-logo">{project.name}</span>}
-            <span className="gc-label">{project.name}</span>
-          </button>
-        ))}
+      <section className="gc-flip-grid" aria-label="Clients">
+        {clients.map((client) => {
+          const hasMore = !!(client.media?.length || client.links?.length || client.scriptIds?.length);
+          const flipped = flippedId === client.id;
+          return (
+            <button
+              type="button"
+              key={client.id}
+              className={`gc-flip ${flipped ? "is-flipped" : ""}`}
+              onClick={() => {
+                // Mouse users already see the back on hover; touch users tap once to flip, again to open.
+                const showingBack = flipped || window.matchMedia("(hover: hover)").matches;
+                if (hasMore && showingBack) setOpenClient(client);
+                else setFlippedId(flipped ? null : client.id);
+              }}
+              onMouseLeave={() => setFlippedId(null)}
+              aria-label={`${client.name}${client.work ? ` — ${client.work}` : ""}`}
+            >
+              <span className="gc-flip-inner">
+                <span className={`gc-face gc-front ${client.fit === "cover" ? "is-cover" : ""}`}>
+                  {client.logo
+                    ? <img src={client.logo} alt="" loading="lazy" />
+                    : <span className="gc-logo">{client.name}</span>}
+                </span>
+                <span className="gc-face gc-back">
+                  <b>{client.name}</b>
+                  {client.work && <span>{client.work}</span>}
+                  {hasMore && <i>See the work →</i>}
+                </span>
+              </span>
+            </button>
+          );
+        })}
       </section>
 
-      <section id="random" className="section-block gc-text">
-        <h2>Random things</h2>
-        {aboutLines.map((line) => <p key={line}>{line}</p>)}
-        <p><b>I prefer</b></p>
-        <ul>{prefers.map(([a, b]) => <li key={a}><b>{a}</b> over {b}</li>)}</ul>
-        <p>At this moment, there’s a 97% chance I’ll be reading something or watching something.</p>
-      </section>
-
-      <footer id="contact" className="site-footer">
-        <div><h2>Got a brief?<br /><em>Let&apos;s make it hit.</em></h2></div>
-        <div className="footer-actions">
-          <a href="mailto:salveaditya15@gmail.com">salveaditya15@gmail.com <ArrowUpRight /></a>
-          <a href="tel:+919326250513">+91 93262 50513 <Phone /></a>
-          <a href="https://www.linkedin.com/in/aditya-salve-4b51a3284" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a>
+      <section className="gc-spec" aria-labelledby="spec-title">
+        <div className="gc-section-head">
+          <span className="section-kicker">Spec ads</span>
+          <h2 id="spec-title">A folder full of what ifs.</h2>
         </div>
-        <div className="footer-base"><span>© 2026 Aditya Salve</span><Button variant="ghost" onClick={replay}><RotateCcw /> Play boxing again</Button></div>
-      </footer>
+        <div className="gc-marquee">
+          <div className="gc-marquee-track">
+            {/* Rendered twice so the loop scrolls seamlessly; the copy is hidden from screen readers. */}
+            {[0, 1].map((copy) => specAds.map((src, index) => (
+              <button type="button" key={`${copy}-${src}`} className="gc-spec-item" onClick={() => setOpenSpec(src)} aria-hidden={copy === 1} tabIndex={copy === 1 ? -1 : 0} aria-label={`Open spec ad ${index + 1}`}>
+                <img src={src} alt="" loading="lazy" />
+              </button>
+            )))}
+          </div>
+        </div>
+      </section>
 
-      {openProject && (
-        <div className="lightbox gc-project" role="dialog" aria-modal="true" aria-label={openProject.name} onClick={() => setOpenProject(null)}>
+      <section className="gc-scripts" aria-labelledby="scripts-title">
+        <div className="gc-section-head">
+          <span className="section-kicker">Scripts</span>
+          <h2 id="scripts-title">Mock scripts are right here.</h2>
+          <button type="button" className="gc-click-here" onClick={() => setScriptsOpen((open) => !open)} aria-expanded={scriptsOpen}>
+            {scriptsOpen ? "Hide them" : "Click here"}
+          </button>
+        </div>
+        {scriptsOpen && (
+          <div className="gc-script-grid">
+            {scripts.map((script) => (
+              <button type="button" key={script.id} className="gc-card" onClick={() => setOpenScript(script)}>
+                <small>{script.brand}</small><b>{script.title}</b><span>{script.logline}</span><i>Read script →</i>
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {openSpec && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Spec ad" onClick={() => setOpenSpec(null)}>
           <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
-            <b>{openProject.name}</b>
-            <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenProject(null)} aria-label="Close"><X /></Button>
+            <b>Spec ad</b>
+            <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenSpec(null)} aria-label="Close"><X /></Button>
+          </div>
+          <div className="lightbox-body"><img src={openSpec} alt="Spec ad" onClick={(event) => event.stopPropagation()} /></div>
+        </div>
+      )}
+
+      {openClient && (
+        <div className="lightbox gc-project" role="dialog" aria-modal="true" aria-label={openClient.name} onClick={() => setOpenClient(null)}>
+          <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
+            <b>{openClient.name}</b>
+            <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenClient(null)} aria-label="Close"><X /></Button>
           </div>
           <div className="gc-project-body" onClick={(event) => event.stopPropagation()}>
-                        {openProject.media?.map((item) => (
-              <figure key={item.src}>
-                {isVideo(item.src) ? <video src={item.src} controls playsInline preload="metadata" /> : <img src={item.src} alt={openProject.name} loading="lazy" />}
-                
+            {openClient.work && <p className="gc-project-sub">{openClient.work}</p>}
+            {openClient.media?.map((src) => (
+              <figure key={src}>
+                {isVideo(src)
+                  ? <video src={src} controls playsInline preload="metadata" />
+                  : <img src={src} alt={`${openClient.name} work`} loading="lazy" />}
               </figure>
             ))}
-            {openProject.links?.map((link) => (
+            {openClient.links?.map((link) => (
               <a key={link.url} className="gc-card" href={link.url} target="_blank" rel="noreferrer"><b>{link.title}</b><i>▶ Watch on Instagram ↗</i></a>
             ))}
-            {openProject.scriptIds?.map((id) => {
+            {openClient.scriptIds?.map((id) => {
               const script = scripts.find((item) => item.id === id);
               return script ? (
                 <button type="button" key={id} className="gc-card" onClick={() => setOpenScript(script)}><b>{script.title}</b><span>{script.logline}</span><i>Read script →</i></button>
@@ -497,23 +341,6 @@ function Portfolio({
           </div>
         </div>
       )}
-
-      {contactOpen && (
-        <div className="contact-overlay" role="dialog" aria-modal="true" aria-labelledby="contact-title" onClick={() => setContactOpen(false)}>
-          <aside className="contact-drawer" onClick={(event) => event.stopPropagation()}>
-            <Button size="icon" variant="ghost" className="drawer-close" onClick={() => setContactOpen(false)} aria-label="Close contact panel"><X /></Button>
-            <span className="section-kicker">OPEN CHANNEL</span>
-            <h2 id="contact-title">Let&apos;s make<br />something land.</h2>
-            <p>Send over the brief, the wild thought, or just say hello.</p>
-            <div className="contact-options">
-              <div><a href="mailto:salveaditya15@gmail.com"><Mail /> salveaditya15@gmail.com</a><Button size="icon" variant="outline" onClick={() => copyText("email", "salveaditya15@gmail.com")} aria-label="Copy email">{copied === "email" ? <Check /> : <Clipboard />}</Button></div>
-              <div><a href="tel:+919326250513"><Phone /> +91 93262 50513</a><Button size="icon" variant="outline" onClick={() => copyText("phone", "9326250513")} aria-label="Copy phone number">{copied === "phone" ? <Check /> : <Clipboard />}</Button></div>
-              <a href="https://www.linkedin.com/in/aditya-salve-4b51a3284" target="_blank" rel="noreferrer"><Linkedin /> Connect on LinkedIn <ArrowUpRight /></a>
-            </div>
-            <Button asChild className="arcade-button mt-8 w-full"><a href="mailto:salveaditya15@gmail.com?subject=Let%27s%20work%20together">Write an email <Send /></a></Button>
-          </aside>
-        </div>
-      )}
-    </div>
+    </SiteShell>
   );
 }

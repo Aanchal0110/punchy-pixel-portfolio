@@ -503,3 +503,63 @@
 .portfolio-shell .gc-tile .gc-logo { color: var(--pf-text); }
 .portfolio-shell .gc-logo-img { max-width: 62%; max-height: 42%; object-fit: contain; }
 .portfolio-shell .gc-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Navbar: name + role on the left, links in the right corner */
+.portfolio-shell .gc-nav { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: clamp(22px,3vw,34px) clamp(18px,5vw,76px); border-bottom: 1px solid var(--pf-line); }
+.portfolio-shell .gc-nav-name { display: flex; flex-direction: column; line-height: 1.1; color: var(--pf-text); }
+.portfolio-shell .gc-nav-name b { font-size: clamp(1.5rem,3vw,2.2rem); font-weight: 700; letter-spacing: -.03em; }
+.portfolio-shell .gc-nav-name span { font-size: clamp(.8rem,1.2vw,.95rem); text-transform: uppercase; letter-spacing: .18em; color: var(--pf-muted); margin-top: 4px; }
+.portfolio-shell .gc-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(16px,3vw,36px); }
+.portfolio-shell .gc-nav-links a, .portfolio-shell .gc-nav-links button { font-size: clamp(.8rem,1.2vw,.95rem); font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--pf-muted); border-bottom: 2px solid transparent; padding-bottom: 3px; transition: color .2s, border-color .2s; }
+.portfolio-shell .gc-nav-links a:hover, .portfolio-shell .gc-nav-links button:hover, .portfolio-shell .gc-nav-links [data-active="true"] { color: var(--pf-text); border-color: var(--pf-accent); }
+
+/* Hero: just the line */
+.portfolio-shell .gc-hero { padding: clamp(40px,6vw,80px) clamp(22px,6vw,80px) clamp(28px,4vw,48px); }
+.portfolio-shell .gc-hero h1 { font-size: clamp(1.6rem,3.6vw,2.6rem); font-weight: 600; }
+
+/* Client tiles: rounded, flip on hover (or tap) to show the copy */
+.portfolio-shell .gc-flip-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: clamp(10px,1.6vw,18px); padding: 0 clamp(16px,4vw,60px) clamp(64px,8vw,110px); }
+@media (min-width: 768px) { .portfolio-shell .gc-flip-grid { grid-template-columns: repeat(4,1fr); } }
+.portfolio-shell .gc-flip { aspect-ratio: 1; perspective: 1000px; padding: 0; background: none; border: 0; cursor: pointer; text-align: center; }
+.portfolio-shell .gc-flip-inner { position: relative; display: block; width: 100%; height: 100%; transition: transform .6s cubic-bezier(.2,.7,.2,1); transform-style: preserve-3d; }
+.portfolio-shell .gc-flip.is-flipped .gc-flip-inner, .portfolio-shell .gc-flip:focus-visible .gc-flip-inner { transform: rotateY(180deg); }
+@media (hover: hover) { .portfolio-shell .gc-flip:hover .gc-flip-inner { transform: rotateY(180deg); } }
+.portfolio-shell .gc-face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-items: center; border: 1px solid var(--pf-line); }
+.portfolio-shell .gc-front { background: #fff; }
+.portfolio-shell .gc-front img { max-width: 86%; max-height: 62%; width: 86%; object-fit: contain; }
+.portfolio-shell .gc-front.is-cover img { max-width: none; max-height: none; width: 100%; height: 100%; object-fit: cover; }
+.portfolio-shell .gc-front .gc-logo { color: var(--pf-text); }
+.portfolio-shell .gc-back { transform: rotateY(180deg); background: var(--pf-text); color: #fff; align-content: center; gap: 10px; padding: clamp(14px,2vw,26px); }
+.portfolio-shell .gc-back b { font-size: clamp(1rem,1.8vw,1.35rem); }
+.portfolio-shell .gc-back span { font-size: clamp(.8rem,1.2vw,.98rem); line-height: 1.45; opacity: .9; }
+.portfolio-shell .gc-back i { font-style: normal; font-weight: 700; font-size: .8rem; color: var(--pf-accent); }
+@media (prefers-reduced-motion: reduce) { .portfolio-shell .gc-flip-inner { transition: none; } }
+
+/* About page */
+.portfolio-shell .gc-about { max-width: 980px; margin: 0 auto; border-bottom: 0; }
+.portfolio-shell .gc-about h2 { font-size: 2rem; font-weight: 700; margin-bottom: 18px; }
+.portfolio-shell .gc-about-intro { font-size: 1.15rem; line-height: 1.7; margin-bottom: 36px; color: var(--pf-muted); }
+.gc-project-sub { font-size: 1.05rem; }
+
+/* Home sections below the client grid */
+.portfolio-shell .gc-section-head { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 clamp(16px,4vw,60px); margin-bottom: clamp(20px,3vw,32px); }
+.portfolio-shell .gc-section-head h2 { font-size: clamp(1.7rem,3.6vw,2.6rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+.portfolio-shell .gc-spec, .portfolio-shell .gc-scripts { padding-block: clamp(48px,7vw,96px); border-top: 1px solid var(--pf-line); }
+
+/* Spec ads: continuous auto-scroll, pauses on hover */
+.portfolio-shell .gc-marquee { overflow: hidden; }
+.portfolio-shell .gc-marquee-track { display: flex; gap: clamp(12px,1.6vw,20px); width: max-content; animation: gc-marquee 45s linear infinite; padding-inline: clamp(6px,0.8vw,10px); }
+.portfolio-shell .gc-marquee:hover .gc-marquee-track, .portfolio-shell .gc-marquee:focus-within .gc-marquee-track { animation-play-state: paused; }
+@keyframes gc-marquee { to { transform: translateX(-50%); } }
+.portfolio-shell .gc-spec-item { flex: none; height: clamp(240px,34vw,400px); border-radius: 18px; overflow: hidden; border: 1px solid var(--pf-line); background: #fff; padding: 0; cursor: zoom-in; transition: transform .25s; }
+.portfolio-shell .gc-spec-item:hover { transform: translateY(-4px); }
+.portfolio-shell .gc-spec-item img { height: 100%; width: auto; max-width: none; display: block; }
+@media (prefers-reduced-motion: reduce) { .portfolio-shell .gc-marquee { overflow-x: auto; } .portfolio-shell .gc-marquee-track { animation: none; } }
+
+/* Mock scripts */
+.portfolio-shell .gc-click-here { margin-top: 10px; padding: 12px 26px; border-radius: 999px; background: var(--pf-text); color: #fff; font-weight: 700; letter-spacing: .02em; transition: opacity .2s, transform .2s; }
+.portfolio-shell .gc-click-here:hover { opacity: .88; transform: translateY(-2px); }
+.portfolio-shell .gc-script-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%,280px), 1fr)); gap: clamp(12px,1.6vw,18px); padding: 0 clamp(16px,4vw,60px); }
+.portfolio-shell .gc-script-grid .gc-card { border: 1px solid var(--pf-line); border-radius: 18px; align-content: start; }
+.portfolio-shell .gc-script-grid .gc-card small { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: #777; }
+.portfolio-shell .gc-flip-grid { padding-bottom: clamp(48px,7vw,96px); }
