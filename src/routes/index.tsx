@@ -98,7 +98,7 @@ type ShowcaseItem = {
   tags: string[];
   feature?: boolean;
   images?: { src: string; caption: string }[];
-  entries?: { title: string; copy: string }[];
+  entries?: { title: string; copy: string }[] | undefined;
   link?: string;
   linkLabel?: string;
 };
@@ -231,7 +231,7 @@ type Project = {
   id: string; name: string; sub: string; logo: string; color: string; font?: string;
   media?: { src: string; caption: string }[];
   links?: { title: string; note: string; url: string }[];
-  entries?: { title: string; copy: string }[];
+  entries?: { title: string; copy: string }[] | undefined;
   scriptIds?: string[];
   drive?: boolean;
 };
@@ -485,7 +485,7 @@ function Portfolio({
       )}
 
       {openScript && (
-        <div className="lightbox" style={{ zIndex: 80 }} role="dialog" aria-modal="true" aria-label={openScript.title} onClick={() => setOpenScript(null)}>
+        <div className="lightbox" style={{ zIndex: 140 }} role="dialog" aria-modal="true" aria-label={openScript.title} onClick={() => setOpenScript(null)}>
           <div className="lightbox-top" onClick={(event) => event.stopPropagation()}>
             <b>{openScript.brand} — {openScript.title}</b>
             <Button size="icon" variant="ghost" className="lightbox-close" onClick={() => setOpenScript(null)} aria-label="Close script"><X /></Button>
