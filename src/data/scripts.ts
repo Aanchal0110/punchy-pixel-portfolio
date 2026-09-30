@@ -267,4 +267,62 @@ export const scripts: ScriptItem[] = [
       { label: "CTA (5s)", lines: ["Get this for your father at haldenluxury.com."] },
     ],
   },
+  {
+    id: "vyoma-av",
+    brand: "L&T Vyoma",
+    title: "Built for What’s Next",
+    format: "AV script · Brand film",
+    logline: "Vyoma stays constant while the word beside it keeps changing — Evolving, Intelligence, Scalable, Sovereign, Secure.",
+    blocks: [
+      {
+        label: "Scene 1",
+        lines: [
+          "The company name is shown from different angles, with northern lights in the background. After a few seconds, the first word and the super appear.",
+          "Super — Vyoma. Evolving.",
+          "VO — Enter a new era of intelligence.",
+        ],
+      },
+      {
+        label: "Scene 2",
+        lines: [
+          "As the word Vyoma stays constant, the descriptive word keeps changing along with its super, over a montage of Vyoma’s infrastructure and work running in the background.",
+          "Super — Vyoma. Intelligence.",
+          "VO — With technology built for greater possibilities.",
+        ],
+      },
+      {
+        label: "Scene 3",
+        lines: [
+          "Montage of Vyoma’s infrastructure and work running in the background, same as above.",
+          "Super — Vyoma. Scalable.",
+          "VO — For reaching as high as your ambitions.",
+        ],
+      },
+      {
+        label: "Scene 4",
+        lines: [
+          "Fast-cut edits of the data centers, and lit-up shots of cities, people using phones, etc.",
+          "Super — Vyoma. Sovereign.",
+          "VO — For powering India’s digital future.",
+        ],
+      },
+      {
+        label: "Scene 5",
+        lines: [
+          "Transition to abstract privacy art in the night sky above the city, with the copy.",
+          "Super — Vyoma. Secure.",
+          "VO — For staying secure every step of the way.",
+        ],
+      },
+      {
+        label: "Scene 6",
+        lines: [
+          "Finally, transition to the logo reveal with the copy.",
+          "Super — Vyoma.ai (logo)",
+          "VO — So that innovation can move forward with confidence.",
+          "Vyoma.AI — Built for what’s next.",
+        ],
+      },
+    ],
+  },
 ];

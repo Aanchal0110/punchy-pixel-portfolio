@@ -4,11 +4,13 @@ import { ChevronRight, Volume2, VolumeX, X } from "lucide-react";
 
 import boxerImage from "@/assets/aditya-boxer.png";
 import logoAmex from "@/assets/clients/amex.png";
-import logoEbco from "@/assets/clients/ebco.png";
+import logoEbco from "@/assets/clients/ebco.svg";
+import logoIhcl from "@/assets/clients/ihcl.png";
 import logoJioHotstar from "@/assets/clients/jiohotstar.png";
 import logoKss from "@/assets/clients/kolkata-superstars.png";
 import logoLyke from "@/assets/clients/lyke.png";
 import logoNatGeo from "@/assets/clients/natgeo.png";
+import logoSukhin from "@/assets/clients/sukhin.png";
 import logoSkybags from "@/assets/clients/skybags.png";
 import logoTransUnion from "@/assets/clients/transunion.png";
 import logoVyoma from "@/assets/clients/vyoma.png";
@@ -64,16 +66,16 @@ const clients: Client[] = [
       { title: "JioHotstar reel", url: "https://www.instagram.com/reel/DPq7RoVExeq/" },
     ],
   },
-  { id: "natgeo", name: "NatGeo", logo: logoNatGeo, fit: "cover", work: "Topical emailers and marketing ideas for their upcoming shows." },
+  { id: "natgeo", name: "NatGeo", logo: logoNatGeo, fit: "cover", work: "Topical emailers and marketing ideas for their upcoming shows.", media: workMedia.natgeo },
   { id: "ebco", name: "Ebco", logo: logoEbco, fit: "cover", work: "Topical social media posts and emailers for ideas for new product launches.", media: workMedia.ebco },
-  { id: "vyoma", name: "L&T Vyoma", logo: logoVyoma, fit: "contain", work: "Website copy, social media posts & data center interior wall designs.", media: workMedia.vyoma },
-  { id: "transunion", name: "TransUnion", logo: logoTransUnion, fit: "contain", work: "Ideas for campaigns and BAU emailers.", media: workMedia.transunion },
+  { id: "vyoma", name: "L&T Vyoma", logo: logoVyoma, fit: "contain", work: "Website copy, social media posts & data center interior wall designs.", media: workMedia.vyoma, scriptIds: ["vyoma-av"] },
+  { id: "transunion", name: "TransUnion", logo: logoTransUnion, fit: "cover", work: "Ideas for campaigns and BAU emailers.", media: workMedia.transunion },
   { id: "amex", name: "Amex", logo: logoAmex, fit: "cover", work: "Wrote emailers for different cardholders.", media: workMedia.amex },
-  { id: "sukhin", name: "Sukhin", work: "Social media posts.", media: workMedia.sukhin },
+  { id: "sukhin", name: "Sukhin", logo: logoSukhin, fit: "contain", work: "Social media posts.", media: workMedia.sukhin },
   { id: "lyke", name: "LYKE", logo: logoLyke, fit: "cover", work: "Wrote social media posts.", media: workMedia.lyke },
   { id: "kss", name: "Kolkata Superstars", logo: logoKss, fit: "cover", work: "Managed their social media account.", media: workMedia.kss, scriptIds: ["ecl-retention"] },
   { id: "yolo", name: "Yolo", logo: logoYolo, fit: "contain", work: "Created social media posts.", media: workMedia.yolo },
-  { id: "ihcl", name: "IHCL", media: workMedia.ihcl },
+  { id: "ihcl", name: "IHCL", logo: logoIhcl, fit: "contain", media: workMedia.ihcl },
   { id: "skybags", name: "Skybags", logo: logoSkybags, fit: "cover", media: workMedia.skybags },
 ];
 
@@ -208,7 +210,7 @@ function Portfolio({ replay }: { replay: () => void }) {
   return (
     <SiteShell onReplay={replay}>
       <section id="top" className="gc-hero">
-        <h1>Some copies I made for some clients.</h1>
+        <h1>Clients I&apos;ve Worked With</h1>
       </section>
 
       <section className="gc-flip-grid" aria-label="Clients">
@@ -249,7 +251,7 @@ function Portfolio({ replay }: { replay: () => void }) {
       <section className="gc-spec" aria-labelledby="spec-title">
         <div className="gc-section-head">
           <span className="section-kicker">Spec ads</span>
-          <h2 id="spec-title">A folder full of what ifs.</h2>
+          <h2 id="spec-title">A Folder Full of What Ifs</h2>
         </div>
         <div className="gc-marquee">
           <div className="gc-marquee-track">
@@ -265,7 +267,7 @@ function Portfolio({ replay }: { replay: () => void }) {
 
       <section className="gc-scripts" aria-labelledby="scripts-title">
         <div className="gc-section-head">
-          <span className="section-kicker">Scripts</span>
+          <span className="section-kicker">More</span>
           <h2 id="scripts-title">Mock scripts are right here.</h2>
           <button type="button" className="gc-click-here" onClick={() => setScriptsOpen((open) => !open)} aria-expanded={scriptsOpen}>
             {scriptsOpen ? "Hide them" : "Click here"}
