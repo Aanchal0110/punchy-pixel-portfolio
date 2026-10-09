@@ -5,7 +5,6 @@ import { ChevronRight, Volume2, VolumeX, X } from "lucide-react";
 import boxerImage from "@/assets/aditya-boxer.png";
 import logoAmex from "@/assets/clients/amex.png";
 import logoEbco from "@/assets/clients/ebco.svg";
-import logoIhcl from "@/assets/clients/ihcl.png";
 import logoJioHotstar from "@/assets/clients/jiohotstar.png";
 import logoKss from "@/assets/clients/kolkata-superstars.png";
 import logoLyke from "@/assets/clients/lyke.png";
@@ -75,7 +74,6 @@ const clients: Client[] = [
   { id: "lyke", name: "LYKE", logo: logoLyke, fit: "cover", work: "Wrote social media posts.", media: workMedia.lyke },
   { id: "kss", name: "Kolkata Superstars", logo: logoKss, fit: "cover", work: "Managed their social media account.", media: workMedia.kss, scriptIds: ["ecl-retention"] },
   { id: "yolo", name: "Yolo", logo: logoYolo, fit: "contain", work: "Created social media posts.", media: workMedia.yolo },
-  { id: "ihcl", name: "IHCL", logo: logoIhcl, fit: "contain", media: workMedia.ihcl },
   { id: "skybags", name: "Skybags", logo: logoSkybags, fit: "cover", media: workMedia.skybags },
 ];
 
